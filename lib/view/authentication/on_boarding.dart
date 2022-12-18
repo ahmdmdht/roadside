@@ -125,6 +125,14 @@ class on_boarding extends StatelessWidget {
       ),
 
  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+ //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+ //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+ //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+ //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+ //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+ //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+ //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+ //  print('aaaaaaaaaaaaaaaaaaa7aaa');
 
   Text('${model.body}',style: TextStyle(
           fontSize: 14.0,
