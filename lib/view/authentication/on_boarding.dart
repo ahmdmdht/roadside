@@ -120,9 +120,9 @@ class on_boarding extends StatelessWidget {
 
         ),),
       ),
-      SizedBox(
-        height: 40,
-      ),
+      // SizedBox(
+      //   height: 40,
+      // ),
       Text('${model.body}',style: TextStyle(
           fontSize: 14.0,
           fontWeight: FontWeight.bold
