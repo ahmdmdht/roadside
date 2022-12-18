@@ -8,6 +8,28 @@ import 'on_boarding.dart';
 class splashscreen extends StatelessWidget {
   const splashscreen({Key? key}) : super(key: key);
 
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+  //  print('aaaaaaaaaaaaaaaaaaa7aaa');
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
