@@ -24,7 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text(
                 'what is the problem?',
                 style: GoogleFonts.pacifico(
-                    textStyle: Theme.of(context).textTheme.displayMedium,
+                    textStyle: Theme
+                        .of(context)
+                        .textTheme
+                        .displayMedium,
                     fontSize: 24,
                     fontWeight: FontWeight.w500,
                     fontStyle: FontStyle.italic,
@@ -35,7 +38,18 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(
             height: 60,
           ),
+          Container(
+            height: 400,
+            child: GridView.builder(
+              gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:  3),
+              itemBuilder: (context, index) => buildItem(index, context),
+              itemCount: 6,
 
+              primary: false,
+              padding: const EdgeInsets.all(20),
+
+            ),
+          ),
           Container(
             height: 60,
             width: 220,
@@ -53,7 +67,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text(
                 'Something else',
                 style: GoogleFonts.akshar(
-                  textStyle: Theme.of(context).textTheme.displayMedium,
+                  textStyle: Theme
+                      .of(context)
+                      .textTheme
+                      .displayMedium,
                   fontSize: 17,
                   color: Colors.black,
                   fontWeight: FontWeight.w500,
@@ -102,52 +119,55 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 
-
   Widget buildItem(int index, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedIndex = index;
-                    });
-                  },
-                  child: Container(
-                    height: 110,
-                    width: 80,
-                    decoration: BoxDecoration(
-                      //color: Color.fromRGBO(230, 237, 254, 1),
-                      color: selectedIndex==index ? Colors.black38 : Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(6),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.white,
-                          blurRadius: 30,
-                          offset: Offset(5, 5),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 8),
-                          child: Icon(Icons.add_alert,
-                              size: 45, color: Color.fromRGBO(167, 233, 47, 1)),
-                        ),
-                        Text(
-                          'Accident',
-                          style: GoogleFonts.akshar(
-                            textStyle:
-                                Theme.of(context).textTheme.displayMedium,
-                            fontSize: 17,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+        onTap: () {
+          setState(() {
+            selectedIndex = index;
+          });
+        },
+        child: Container(
+          height: 110,
+          width: 80,
+          decoration: BoxDecoration(
+            //color: Color.fromRGBO(230, 237, 254, 1),
+            color: selectedIndex == index ? Colors.black38 : Colors.grey
+                .shade200,
+            borderRadius: BorderRadius.circular(6),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.white,
+                blurRadius: 30,
+                offset: Offset(5, 5),
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 8),
+                child: Icon(Icons.add_alert,
+                    size: 45, color: Color.fromRGBO(167, 233, 47, 1)),
+              ),
+              Text(
+                'Accident',
+                style: GoogleFonts.akshar(
+                  textStyle:
+                  Theme
+                      .of(context)
+                      .textTheme
+                      .displayMedium,
+                  fontSize: 17,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
                 ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
