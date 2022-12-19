@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:roadside_assistance/view/authentication/splash_screen.dart';
-import 'package:roadside_assistance/view/components/home_screen.dart';
+import 'package:roadside_assistance/view/home_screen.dart';
 
 
 void main() {
@@ -22,13 +22,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'roadside assistance',
-
-      theme: ThemeData(
-
-
-      ),
+      theme: ThemeData(),
+     
       debugShowCheckedModeBanner: false,
-      home: home_screen(),
+      home: HomeScreen(),
 
     );
   }
