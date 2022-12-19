@@ -124,35 +124,7 @@ class on_boarding extends StatelessWidget {
         height: 40,
       ),
 
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');ddd
- //  print('aaaaaaaaaaaaaaaaaaa7aaa');
+
 
   Text('${model.body}',style: TextStyle(
           fontSize: 14.0,

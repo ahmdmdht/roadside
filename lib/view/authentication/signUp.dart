@@ -158,7 +158,7 @@ class signUp extends StatelessWidget {
 
                 width: 200,
                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(8),
-                  color: Color.fromRGBO(146, 248, 0, 1),
+                    color: Color.fromRGBO(167, 233, 47, 1),
                 ),
                 child: MaterialButton(
                   onPressed: () {

@@ -27,7 +27,7 @@ class logIn extends StatelessWidget {
                     fontSize: 45,
                     fontWeight: FontWeight.w500,
                     fontStyle: FontStyle.italic,
-                      color: Color.fromRGBO(146, 248, 0, 1),
+                      color: Color.fromRGBO(167, 233, 47, 1),
 
                   ),
 

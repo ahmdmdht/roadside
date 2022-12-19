@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:roadside_assistance/view/authentication/splash_screen.dart';
+import 'package:roadside_assistance/view/components/home_screen.dart';
 
 
 void main() {
@@ -27,8 +28,8 @@ class MyApp extends StatelessWidget {
 
       ),
       debugShowCheckedModeBanner: false,
-      home: splashscreen(),
-//نيهاهاهاهاهاهاهاهاهاهاهاه
+      home: home_screen(),
+
     );
   }
 }
