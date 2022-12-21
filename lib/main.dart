@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:roadside_assistance/view/authentication/car_information.dart';
+import 'package:roadside_assistance/view/authentication/forget_password.dart';
 import 'package:roadside_assistance/view/authentication/splash_screen.dart';
 import 'package:roadside_assistance/view/home_screen.dart';
 
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(),
      
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: splashscreen(),
 
     );
   }

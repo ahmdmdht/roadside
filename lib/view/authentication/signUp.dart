@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'car_information.dart';
+
 
 
 class signUp extends StatelessWidget {
@@ -162,8 +164,8 @@ class signUp extends StatelessWidget {
                 ),
                 child: MaterialButton(
                   onPressed: () {
-                    print(emailcontroller.text);
-                    print(passwordcontroller.text);
+                    Navigator.pushReplacement(
+                        context, MaterialPageRoute(builder: (context) => car_information()));
                   },
                   child: Text(
                     "continue",

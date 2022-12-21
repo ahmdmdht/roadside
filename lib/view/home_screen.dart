@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -24,10 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text(
                 'what is the problem?',
                 style: GoogleFonts.pacifico(
-                    textStyle: Theme
-                        .of(context)
-                        .textTheme
-                        .displayMedium,
+                    textStyle: Theme.of(context).textTheme.displayMedium,
                     fontSize: 24,
                     fontWeight: FontWeight.w500,
                     fontStyle: FontStyle.italic,
@@ -41,13 +39,12 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             height: 400,
             child: GridView.builder(
-              gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:  3),
+              gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3),
               itemBuilder: (context, index) => buildItem(index, context),
               itemCount: 6,
-
               primary: false,
-              padding: const EdgeInsets.all(20),
-
+              padding: const EdgeInsets.all(30),
             ),
           ),
           Container(
@@ -67,17 +64,39 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text(
                 'Something else',
                 style: GoogleFonts.akshar(
-                  textStyle: Theme
-                      .of(context)
-                      .textTheme
-                      .displayMedium,
+                  textStyle: Theme.of(context).textTheme.displayMedium,
                   fontSize: 17,
                   color: Colors.black,
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ),
-          )
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          MaterialButton(
+              onPressed: () {},
+              child: Container(
+                height: 60,
+                width: 350,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color:   Color.fromRGBO(167, 233, 47, 1),
+                ),
+
+                child: Center(
+                  child: Text(
+                    'Continue',
+                    style: GoogleFonts.akshar(
+                      textStyle: Theme.of(context).textTheme.displayMedium,
+                      fontSize: 30,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              )),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -118,7 +137,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
   Widget buildItem(int index, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -133,8 +151,8 @@ class _HomeScreenState extends State<HomeScreen> {
           width: 80,
           decoration: BoxDecoration(
             //color: Color.fromRGBO(230, 237, 254, 1),
-            color: selectedIndex == index ? Colors.black38 : Colors.grey
-                .shade200,
+            color:
+                selectedIndex == index ? Colors.black38 : Colors.grey.shade200,
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
@@ -148,17 +166,14 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 10, bottom: 8),
-                child: Icon(Icons.add_alert,
-                    size: 45, color: Color.fromRGBO(167, 233, 47, 1)),
+                child: Image(
+                  image: AssetImage('assets/images/board1.jpeg'),
+                ),
               ),
               Text(
                 'Accident',
                 style: GoogleFonts.akshar(
-                  textStyle:
-                  Theme
-                      .of(context)
-                      .textTheme
-                      .displayMedium,
+                  textStyle: Theme.of(context).textTheme.displayMedium,
                   fontSize: 17,
                   color: Colors.black,
                   fontWeight: FontWeight.w500,
