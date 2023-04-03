@@ -1,15 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:roadside_assistance/configMaps.dart';
 
+import '../../main.dart';
 import 'car_information.dart';
 
 
 
 class signUp extends StatelessWidget {
-  @override
   var emailcontroller = TextEditingController();
   var passwordcontroller = TextEditingController();
+  var firstNamecontroller = TextEditingController();
+  var lastNamecontroller = TextEditingController();
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,10 +35,6 @@ class signUp extends StatelessWidget {
                     color: Color.fromRGBO(146, 248, 0, 1),
 
                   ),
-
-
-
-
                 ),
               ),
               SizedBox(
@@ -46,7 +46,7 @@ class signUp extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15)
                 ),
                 child: TextFormField(
-                  controller: emailcontroller,
+                  controller: firstNamecontroller,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
 
@@ -70,7 +70,7 @@ class signUp extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15)
                 ),
                 child: TextFormField(
-                  controller: emailcontroller,
+                  controller: lastNamecontroller,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
 
@@ -100,11 +100,12 @@ class signUp extends StatelessWidget {
                       labelText: 'Email address',
                       prefixIcon: Icon(Icons.email),
                       border: OutlineInputBorder()),
-                  onFieldSubmitted: (value) {
-                    print(value);
+                  onFieldSubmitted: (data) {
+                    print(data);
                   },
-                  onChanged: (value) {
-                    print(value);
+                  onChanged: (data) {
+
+                    print(data);
                   },
                 ),
               ),//email
@@ -164,6 +165,8 @@ class signUp extends StatelessWidget {
                 ),
                 child: MaterialButton(
                   onPressed: () {
+                    registerNewUser(context);
+
                     Navigator.pushReplacement(
                         context, MaterialPageRoute(builder: (context) => car_information()));
                   },
@@ -181,55 +184,24 @@ class signUp extends StatelessWidget {
             ],
           ),
         )
-      // SingleChildScrollView(
-      //   scrollDirection: Axis.horizontal,
-      //   child: Row(
-      //     children: [
-      //       Container(
-      //         color: Colors.blue,
-      //         child: Text(
-      //           "second page",style: TextStyle(
-      //           color: Colors.white60,
-      //           fontSize: 30.0,
-      //
-      //         ),
-      //         ),
-      //       ),
-      //       Container(
-      //
-      //         child: Text(
-      //           "second page",style: TextStyle(
-      //           color: Colors.white60,
-      //           fontSize: 30.0,
-      //           backgroundColor: Colors.blue,
-      //         ),
-      //         ),
-      //       ),
-      //       Container(
-      //
-      //         child: Text(
-      //           "second page",style: TextStyle(
-      //           color: Colors.white60,
-      //           fontSize: 30.0,
-      //           backgroundColor: Colors.blue,
-      //         ),
-      //         ),
-      //       ),
-      //       Container(
-      //
-      //         child: Text(
-      //           "second page",style: TextStyle(
-      //           color: Colors.white60,
-      //           fontSize: 30.0,
-      //           backgroundColor: Colors.blue,
-      //         ),
-      //         ),
-      //       ),
-      //
-      //     ],
-      //   ),
-      // ),
 
     );
   }
+void registerNewUser(BuildContext context) async{
+    var auth = FirebaseAuth.instance;
+    UserCredential user = await auth.createUserWithEmailAndPassword(email: emailcontroller.text, password: passwordcontroller.text);
+    if(user !=null){
+
+      userRef.child(user.user!.uid).set({
+        'first name': firstNamecontroller.text,
+        'last name' : lastNamecontroller.text,
+        'email' : emailcontroller.text,
+
+      });
+      currentfirebaseUser = user.user;
+    }else{
+
+    }
+  }
+
 }

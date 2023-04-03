@@ -1,15 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../home_screen.dart';
+import 'package:roadside_assistance/configMaps.dart';
+import 'package:roadside_assistance/main.dart';
+import 'package:firebase_database/firebase_database.dart';
+import '../home_layout.dart';
 
 
 
 class car_information extends StatelessWidget {
   @override
-  var emailcontroller = TextEditingController();
-  var passwordcontroller = TextEditingController();
+  final databaseReference = FirebaseDatabase.instance.reference();
+  var vehicleMakecontroller = TextEditingController();
+  var vehicleModelcontroller = TextEditingController();
+  var colorcontroller = TextEditingController();
+  var vehicleLicensecontroller = TextEditingController();
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +74,7 @@ class car_information extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15)
                 ),
                 child: TextFormField(
-                  controller: emailcontroller,
+                  controller: vehicleMakecontroller,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
 
@@ -92,7 +98,7 @@ class car_information extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15)
                 ),
                 child: TextFormField(
-                  controller: emailcontroller,
+                  controller: vehicleModelcontroller,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
 
@@ -115,7 +121,7 @@ class car_information extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15)
                 ),
                 child: TextFormField(
-                  controller: emailcontroller,
+                  controller: colorcontroller,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
 
@@ -136,7 +142,7 @@ class car_information extends StatelessWidget {
               Container(
                 padding: EdgeInsets.only(right: 72,left: 21),
                 child: TextFormField(
-                  controller: passwordcontroller,
+                  controller: vehicleLicensecontroller,
                   //ده اللي بيتحكملي ف textformfieled
                   keyboardType: TextInputType.text,
                   obscureText: true,
@@ -159,7 +165,6 @@ class car_information extends StatelessWidget {
               SizedBox(
                 height: 15,
               ),
-
               SizedBox(
                 height: 15,
               ),
@@ -171,8 +176,6 @@ class car_information extends StatelessWidget {
               SizedBox(
                 height: 15,
               ),
-
-
               SizedBox(
                 height: 25,
               ),
@@ -185,8 +188,15 @@ class car_information extends StatelessWidget {
                   ),
                   child: MaterialButton(
                     onPressed: () {
+
+                      carRef.child("Cars").push().set({
+                        'vehicle make':vehicleMakecontroller.text,
+                        'vehicle model':vehicleModelcontroller.text,
+                        'color':colorcontroller.text,
+                        'License plate':vehicleLicensecontroller.text,
+                      });
                       Navigator.pushReplacement(
-                          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                          context, MaterialPageRoute(builder: (context) => HomeLayout()));
                     },
                     child: Text(
                       "Done",
@@ -203,55 +213,117 @@ class car_information extends StatelessWidget {
             ],
           ),
         )
-      // SingleChildScrollView(
-      //   scrollDirection: Axis.horizontal,
-      //   child: Row(
-      //     children: [
-      //       Container(
-      //         color: Colors.blue,
-      //         child: Text(
-      //           "second page",style: TextStyle(
-      //           color: Colors.white60,
-      //           fontSize: 30.0,
-      //
-      //         ),
-      //         ),
-      //       ),
-      //       Container(
-      //
-      //         child: Text(
-      //           "second page",style: TextStyle(
-      //           color: Colors.white60,
-      //           fontSize: 30.0,
-      //           backgroundColor: Colors.blue,
-      //         ),
-      //         ),
-      //       ),
-      //       Container(
-      //
-      //         child: Text(
-      //           "second page",style: TextStyle(
-      //           color: Colors.white60,
-      //           fontSize: 30.0,
-      //           backgroundColor: Colors.blue,
-      //         ),
-      //         ),
-      //       ),
-      //       Container(
-      //
-      //         child: Text(
-      //           "second page",style: TextStyle(
-      //           color: Colors.white60,
-      //           fontSize: 30.0,
-      //           backgroundColor: Colors.blue,
-      //         ),
-      //         ),
-      //       ),
-      //
-      //     ],
-      //   ),
-      // ),
 
     );
   }
+  // void saveDriverCarInfo(context){
+  //   String userId = currentfirebaseUser!.uid;
+  //   print(userId);
+  //
+  //   Map carInfoMap=
+  //       {
+  //         'vehicle make':vehicleMakecontroller.text,
+  //         'vehicle model':vehicleModelcontroller.text,
+  //         'color':colorcontroller.text,
+  //         'License plate#':vehicleLicensecontroller.text,
+  //       };
+  //
+  //   userRef.child(userId).child('car_details').set(carInfoMap);
+  // }
 }
+/////////////////////////////////////////////////////////////////////////
+
+
+
+
+//
+// class CarRegistration extends StatefulWidget {
+//   @override
+//   _CarRegistrationState createState() => _CarRegistrationState();
+// }
+//
+// class _CarRegistrationState extends State<CarRegistration> {
+//
+//
+//   TextEditingController nameController = TextEditingController();
+//   TextEditingController modelController = TextEditingController();
+//   TextEditingController yearController = TextEditingController();
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Car Registration'),
+//       ),
+//       body: Padding(
+//         padding: EdgeInsets.all(10),
+//         child: ListView(
+//           children: <Widget>[
+//             Container(
+//               alignment: Alignment.center,
+//               padding: EdgeInsets.all(10),
+//               child: Text(
+//                 'Register Your Car',
+//                 style: TextStyle(
+//                     color: Colors.blue,
+//                     fontWeight: FontWeight.w500,
+//                     fontSize: 30),
+//               ),
+//             ),
+//             Container(
+//               padding: EdgeInsets.all(10),
+//               child: TextField(
+//                 controller: nameController,
+//                 decoration: InputDecoration(
+//                   border: OutlineInputBorder(),
+//                   labelText: 'Name',
+//                 ),
+//               ),
+//             ),
+//             Container(
+//               padding: EdgeInsets.all(10),
+//               child: TextField(
+//                 controller: modelController,
+//                 decoration: InputDecoration(
+//                   border: OutlineInputBorder(),
+//                   labelText: 'Model',
+//                 ),
+//               ),
+//             ),
+//             Container(
+//               padding: EdgeInsets.all(10),
+//               child: TextField(
+//                 controller: yearController,
+//                 decoration: InputDecoration(
+//                   border: OutlineInputBorder(),
+//                   labelText: 'Year',
+//                 ),
+//               ),
+//             ),
+//             Container(
+//                 height: 50,
+//                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+//                 child: RaisedButton(
+//                   textColor: Colors.white,
+//                   color: Colors.blue,
+//                   child:
+//                   Text('Register'),
+//                   onPressed: () {
+//                     .then((_) {
+//                       Scaffold.of(context).showSnackBar(SnackBar(content:
+//                       Text('Successfully Registered')));
+//                       nameController.clear();
+//                       modelController.clear();
+//                       yearController.clear();
+//                     }).catchError((onError) {
+//                       Scaffold.of(context).showSnackBar(SnackBar(content:
+//                       Text(onError)));
+//                     });
+//                   },
+//                 )),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

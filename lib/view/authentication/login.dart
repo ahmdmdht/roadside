@@ -1,10 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:roadside_assistance/view/authentication/signUp.dart';
 import 'package:roadside_assistance/view/components/components.dart';
 
-import '../home_screen.dart';
+import '../../main.dart';
+import '../../remote/cashe_helper.dart';
+import '../home_layout.dart';
 
 class logIn extends StatelessWidget {
   @override
@@ -122,12 +126,13 @@ class logIn extends StatelessWidget {
           Container(
             width: 100,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Color.fromRGBO(167, 233, 47, 1)),
+                borderRadius: BorderRadius.circular(8), color: primaryColor),
             child: MaterialButton(
               onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()));
+                 loginWithFirebase(context);
+
+                // Navigator.pushReplacement(context,
+                //     MaterialPageRoute(builder: (context) => HomeLayout()));
               },
               child: Text(
                 "Log in",
@@ -191,5 +196,36 @@ class logIn extends StatelessWidget {
         // ),
 
         );
+  }
+
+  void loginWithFirebase(BuildContext context) async {
+
+  User ?  credential ;
+    var auth = FirebaseAuth.instance;
+    try {
+       credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailcontroller.text,
+          password: passwordcontroller.text
+      ).then((value) {
+
+        CacheHelper.sharedPreferences.setString("userId", credential!.uid);
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (context) => HomeLayout()) ,(route) => false,);
+
+
+      });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+
+      }
+    }
+    // if (user != null) {
+    //   userRef.child(user.user!.uid).once().then((value){
+    //     print("1232123");
+    //   });
+    // } else {}
   }
 }

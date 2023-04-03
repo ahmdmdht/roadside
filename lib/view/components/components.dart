@@ -29,6 +29,8 @@ Widget defaultButton({
       ),
     );
 
+
+
 Widget defaultFormFiled({
   required TextEditingController controller,
   required TextInputType type,
@@ -61,3 +63,7 @@ Widget defaultFormFiled({
 
           border: OutlineInputBorder(),
         ));
+const primaryColor= Color.fromRGBO(167, 233, 47, 1);
+
+
+
