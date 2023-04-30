@@ -77,7 +77,7 @@ class _VehState extends State<VehicleIssue> {
               padding: const EdgeInsets.only(left: 10),
               child: MaterialButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => car_information()));
+              //       Navigator.push(context, MaterialPageRoute(builder: (context) => car_information()));
                   },
                   child: Container(
                     height: 60,

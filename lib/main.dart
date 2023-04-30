@@ -21,7 +21,6 @@ import 'firebase_options.dart';
 import 'maps_Screen.dart';
 
 DatabaseReference userRef = FirebaseDatabase.instance.ref().child('users');
-DatabaseReference carRef = FirebaseDatabase.instance.ref().child('carInfo');
 Future<void> main()  async {
   WidgetsFlutterBinding.ensureInitialized();
  await CacheHelper.init();
@@ -49,9 +48,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'roadside assistance',
       theme: ThemeData(),
-     
       debugShowCheckedModeBanner: false,
-      home: account_setting(),
+      home: logIn(),
 
     );
   }

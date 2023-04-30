@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:roadside_assistance/configMaps.dart';
+import 'package:roadside_assistance/view/authentication/login.dart';
 
 import '../../main.dart';
 import 'car_information.dart';
@@ -14,6 +15,11 @@ class signUp extends StatelessWidget {
   var passwordcontroller = TextEditingController();
   var firstNamecontroller = TextEditingController();
   var lastNamecontroller = TextEditingController();
+  var vehicleMakecontroller = TextEditingController();
+  var vehicleModelcontroller = TextEditingController();
+  var colorcontroller = TextEditingController();
+  var vehicleLicensecontroller = TextEditingController();
+
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,6 +119,83 @@ class signUp extends StatelessWidget {
                 height: 60,
               ),
               Container(
+                padding: EdgeInsets.only(right: 72, left: 21),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                child: TextFormField(
+                  controller: vehicleMakecontroller,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                      labelText: 'Vehicle Make ', border: OutlineInputBorder()),
+                  onFieldSubmitted: (value) {
+                    print(value);
+                  },
+                  onChanged: (value) {
+                    print(value);
+                  },
+                ),
+              ), //email
+              SizedBox(
+                height: 60,
+              ),
+              Container(
+                padding: EdgeInsets.only(right: 72, left: 21),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                child: TextFormField(
+                  controller: vehicleModelcontroller,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                      labelText: 'Vehicle Model', border: OutlineInputBorder()),
+                  onFieldSubmitted: (value) {
+                    print(value);
+                  },
+                  onChanged: (value) {
+                    print(value);
+                  },
+                ),
+              ), //email
+              SizedBox(
+                height: 60,
+              ),
+              Container(
+                padding: EdgeInsets.only(right: 72, left: 21),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                child: TextFormField(
+                  controller: colorcontroller,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                      labelText: 'Color', border: OutlineInputBorder()),
+                  onFieldSubmitted: (value) {
+                    print(value);
+                  },
+                  onChanged: (value) {
+                    print(value);
+                  },
+                ),
+              ), //email
+              SizedBox(
+                height: 60,
+              ),
+              Container(
+                padding: EdgeInsets.only(right: 72, left: 21),
+                child: TextFormField(
+                  controller: vehicleLicensecontroller,
+                  //ده اللي بيتحكملي ف textformfieled
+                  keyboardType: TextInputType.text,
+                  obscureText: true,
+                  //يخفي اللي بكتبه ولا لا
+                  decoration: InputDecoration(
+                      labelText: 'License Plate#', border: OutlineInputBorder()),
+                  onFieldSubmitted: (value) {
+                    //بيخزن القيمة اللي بكتبها عندي
+                    print(value);
+                  },
+                  onChanged: (value) {
+                    // بيخزن كل حرف حرفيا او كل تغير عندي فالكونسول
+                    print(value);
+                  },
+                ),
+              ),
+              Container(
                 padding: EdgeInsets.only(right: 72,left: 21),
                 child: TextFormField(
                   controller: passwordcontroller,
@@ -168,7 +251,7 @@ class signUp extends StatelessWidget {
                     registerNewUser(context);
 
                     Navigator.pushReplacement(
-                        context, MaterialPageRoute(builder: (context) => car_information()));
+                        context, MaterialPageRoute(builder: (context) => logIn()));
                   },
                   child: Text(
                     "continue",
@@ -191,12 +274,20 @@ void registerNewUser(BuildContext context) async{
     var auth = FirebaseAuth.instance;
     UserCredential user = await auth.createUserWithEmailAndPassword(email: emailcontroller.text, password: passwordcontroller.text);
     if(user !=null){
-
       userRef.child(user.user!.uid).set({
         'first name': firstNamecontroller.text,
         'last name' : lastNamecontroller.text,
         'email' : emailcontroller.text,
+        'phone' : '' ,
+        'bio' : '' ,
+        'Cars' : {
+          'vehicle make': vehicleMakecontroller.text,
+          'vehicle model': vehicleModelcontroller.text,
+          'color': colorcontroller.text,
+          'License plate': vehicleLicensecontroller.text,
 
+
+        }
       });
       currentfirebaseUser = user.user;
     }else{

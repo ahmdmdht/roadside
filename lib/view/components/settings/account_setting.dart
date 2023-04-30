@@ -1,7 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:roadside_assistance/configMaps.dart';
 
+import '../../../main.dart';
 import '../../../remote/cashe_helper.dart';
 import '../../authentication/car_information.dart';
 
@@ -16,6 +18,24 @@ class _account_settingState extends State<account_setting> {
   var email = TextEditingController();
   var phoneNumber = TextEditingController();
   var bio = TextEditingController();
+
+  Map<String,dynamic> ?  map ;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userRef.child(CacheHelper.getData(key: "userId")).get().then((value) {
+
+      print(value.value);
+    });
+   // DatabaseReference reference userRef.get();
+
+
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +100,7 @@ class _account_settingState extends State<account_setting> {
                     obscureText: true,
                     //يخفي اللي بكتبه ولا لا
                     decoration: InputDecoration(
-                        labelText: 'Password',
-                        prefixIcon: Icon(Icons.lock),
-                        suffixIcon: Icon(Icons.remove_red_eye),
+                        labelText: 'First Name',
                         border: OutlineInputBorder()),
                     onFieldSubmitted: (value) {
                       //بيخزن القيمة اللي بكتبها عندي
@@ -97,15 +115,13 @@ class _account_settingState extends State<account_setting> {
                     height: 15,
                   ),
                   TextFormField(
-                    controller: userName,
+                    controller: fullName,
                     //ده اللي بيتحكملي ف textformfieled
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
                     //يخفي اللي بكتبه ولا لا
                     decoration: InputDecoration(
-                        labelText: 'Password',
-                        prefixIcon: Icon(Icons.lock),
-                        suffixIcon: Icon(Icons.remove_red_eye),
+                        labelText: 'Last Name',
                         border: OutlineInputBorder()),
                     onFieldSubmitted: (value) {
                       //بيخزن القيمة اللي بكتبها عندي
@@ -120,15 +136,13 @@ class _account_settingState extends State<account_setting> {
                     height: 15,
                   ),
                   TextFormField(
-                    controller: email,
+                    controller: fullName,
                     //ده اللي بيتحكملي ف textformfieled
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
                     //يخفي اللي بكتبه ولا لا
                     decoration: InputDecoration(
-                        labelText: 'Password',
-                        prefixIcon: Icon(Icons.lock),
-                        suffixIcon: Icon(Icons.remove_red_eye),
+                        labelText: 'phone number',
                         border: OutlineInputBorder()),
                     onFieldSubmitted: (value) {
                       //بيخزن القيمة اللي بكتبها عندي
@@ -143,15 +157,13 @@ class _account_settingState extends State<account_setting> {
                     height: 15,
                   ),
                   TextFormField(
-                    controller: phoneNumber,
+                    controller: fullName,
                     //ده اللي بيتحكملي ف textformfieled
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
                     //يخفي اللي بكتبه ولا لا
                     decoration: InputDecoration(
-                        labelText: 'Password',
-                        prefixIcon: Icon(Icons.lock),
-                        suffixIcon: Icon(Icons.remove_red_eye),
+                        labelText: 'email',
                         border: OutlineInputBorder()),
                     onFieldSubmitted: (value) {
                       //بيخزن القيمة اللي بكتبها عندي
@@ -166,15 +178,13 @@ class _account_settingState extends State<account_setting> {
                     height: 15,
                   ),
                   TextFormField(
-                    controller: bio,
+                    controller: fullName,
                     //ده اللي بيتحكملي ف textformfieled
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
                     //يخفي اللي بكتبه ولا لا
                     decoration: InputDecoration(
-                        labelText: 'Password',
-                        prefixIcon: Icon(Icons.lock),
-                        suffixIcon: Icon(Icons.remove_red_eye),
+                        labelText: 'bio',
                         border: OutlineInputBorder()),
                     onFieldSubmitted: (value) {
                       //بيخزن القيمة اللي بكتبها عندي
@@ -190,10 +200,10 @@ class _account_settingState extends State<account_setting> {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => car_information()));
+                      // Navigator.pushReplacement(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => car_information()));
                     },
                     child: Text(
                       "continue",

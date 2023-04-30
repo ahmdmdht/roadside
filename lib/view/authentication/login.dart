@@ -207,8 +207,9 @@ class logIn extends StatelessWidget {
           email: emailcontroller.text,
           password: passwordcontroller.text
       ).then((value) {
+        print(value.user!.uid);
 
-        CacheHelper.sharedPreferences.setString("userId", credential!.uid);
+         CacheHelper.sharedPreferences.setString("userId", value.user!.uid);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) => HomeLayout()) ,(route) => false,);
 
