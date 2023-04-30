@@ -13,28 +13,32 @@ class account_setting extends StatefulWidget {
 }
 
 class _account_settingState extends State<account_setting> {
-  var fullName = TextEditingController();
+  var firstName = TextEditingController();
+  var lastName = TextEditingController();
   var userName = TextEditingController();
   var email = TextEditingController();
   var phoneNumber = TextEditingController();
   var bio = TextEditingController();
 
-  Map<String,dynamic> ?  map ;
-
+  Map<String, dynamic>? map;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    userRef.child(CacheHelper.getData(key: "userId")).get().then((value) {
-
-      print(value.value);
+    userRef
+        .child(CacheHelper.getData(key: 'userId'))
+        .get()
+        .then((DataSnapshot snapshot) {
+      if (snapshot.value != null) {
+        Map<dynamic, dynamic> userData =
+            snapshot.value as Map<dynamic, dynamic>;
+        firstName.text = userData['first name'];
+        lastName.text = userData['last name'];
+        phoneNumber.text = userData['phone'];
+        bio.text = userData['bio'];
+        email.text = userData['email'];
+      }
     });
-   // DatabaseReference reference userRef.get();
-
-
-
-
   }
 
   @override
@@ -94,19 +98,20 @@ class _account_settingState extends State<account_setting> {
                     height: 15,
                   ),
                   TextFormField(
-                    controller: fullName,
+                    controller: firstName,
                     //ده اللي بيتحكملي ف textformfieled
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: true,
+                    keyboardType: TextInputType.text,
                     //يخفي اللي بكتبه ولا لا
                     decoration: InputDecoration(
-                        labelText: 'First Name',
-                        border: OutlineInputBorder()),
+                        labelText: 'First Name', border: OutlineInputBorder()),
                     onFieldSubmitted: (value) {
                       //بيخزن القيمة اللي بكتبها عندي
                       print(value);
                     },
                     onChanged: (value) {
+                      setState(() {
+                        firstName.text = value;
+                      });
                       // بيخزن كل حرف حرفيا او كل تغير عندي فالكونسول
                       print(value);
                     },
@@ -115,19 +120,20 @@ class _account_settingState extends State<account_setting> {
                     height: 15,
                   ),
                   TextFormField(
-                    controller: fullName,
+                    controller: lastName,
                     //ده اللي بيتحكملي ف textformfieled
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: true,
+                    keyboardType: TextInputType.text,
                     //يخفي اللي بكتبه ولا لا
                     decoration: InputDecoration(
-                        labelText: 'Last Name',
-                        border: OutlineInputBorder()),
+                        labelText: 'Last Name', border: OutlineInputBorder()),
                     onFieldSubmitted: (value) {
                       //بيخزن القيمة اللي بكتبها عندي
                       print(value);
                     },
                     onChanged: (value) {
+                      setState(() {
+                        lastName.text = value;
+                      });
                       // بيخزن كل حرف حرفيا او كل تغير عندي فالكونسول
                       print(value);
                     },
@@ -136,10 +142,9 @@ class _account_settingState extends State<account_setting> {
                     height: 15,
                   ),
                   TextFormField(
-                    controller: fullName,
+                    controller: phoneNumber,
                     //ده اللي بيتحكملي ف textformfieled
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: true,
+                    keyboardType: TextInputType.phone,
                     //يخفي اللي بكتبه ولا لا
                     decoration: InputDecoration(
                         labelText: 'phone number',
@@ -149,6 +154,9 @@ class _account_settingState extends State<account_setting> {
                       print(value);
                     },
                     onChanged: (value) {
+                      setState(() {
+                        phoneNumber.text = value;
+                      });
                       // بيخزن كل حرف حرفيا او كل تغير عندي فالكونسول
                       print(value);
                     },
@@ -157,19 +165,21 @@ class _account_settingState extends State<account_setting> {
                     height: 15,
                   ),
                   TextFormField(
-                    controller: fullName,
+                    controller: email,
                     //ده اللي بيتحكملي ف textformfieled
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: true,
+                    keyboardType: TextInputType.emailAddress,
                     //يخفي اللي بكتبه ولا لا
                     decoration: InputDecoration(
-                        labelText: 'email',
-                        border: OutlineInputBorder()),
+                        labelText: 'email', border: OutlineInputBorder()),
                     onFieldSubmitted: (value) {
                       //بيخزن القيمة اللي بكتبها عندي
                       print(value);
                     },
                     onChanged: (value) {
+                      setState(() {
+                        email.text = value;
+                      });
+
                       // بيخزن كل حرف حرفيا او كل تغير عندي فالكونسول
                       print(value);
                     },
@@ -178,20 +188,19 @@ class _account_settingState extends State<account_setting> {
                     height: 15,
                   ),
                   TextFormField(
-                    controller: fullName,
+                    controller: bio,
                     //ده اللي بيتحكملي ف textformfieled
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: true,
+                    keyboardType: TextInputType.text,
                     //يخفي اللي بكتبه ولا لا
                     decoration: InputDecoration(
-                        labelText: 'bio',
-                        border: OutlineInputBorder()),
+                        labelText: 'bio', border: OutlineInputBorder()),
                     onFieldSubmitted: (value) {
                       //بيخزن القيمة اللي بكتبها عندي
                       print(value);
                     },
                     onChanged: (value) {
                       // بيخزن كل حرف حرفيا او كل تغير عندي فالكونسول
+                      bio.text = value;
                       print(value);
                     },
                   ),
@@ -200,7 +209,13 @@ class _account_settingState extends State<account_setting> {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      // Navigator.pushReplacement(
+                      userRef.child(CacheHelper.getData(key: 'userId')).update({
+                        'first name': firstName.text,
+                        'last name': lastName.text,
+                        'email': email.text,
+                        'phone': phoneNumber.text,
+                        'bio': bio.text
+                      }); // Navigator.pushReplacement(
                       //     context,
                       //     MaterialPageRoute(
                       //         builder: (context) => car_information()));
