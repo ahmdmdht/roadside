@@ -18,7 +18,7 @@ import 'firebase_options.dart';
 
 
 
-import 'maps_Screen.dart';
+import 'view/location/maps_Screen.dart';
 
 DatabaseReference userRef = FirebaseDatabase.instance.ref().child('users');
 Future<void> main()  async {
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
       title: 'roadside assistance',
       theme: ThemeData(),
       debugShowCheckedModeBanner: false,
-      home: logIn(),
+      home: splashscreen(),
 
     );
   }

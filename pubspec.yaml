@@ -50,6 +50,9 @@ dependencies:
   firebase_core: ^2.8.0
   firebase_database: ^10.0.16
   shared_preferences: ^2.0.17
+  geolocator: ^9.0.1
+  flutter_geofire: ^2.0.3
+  http: ^0.13.5
 
 
 

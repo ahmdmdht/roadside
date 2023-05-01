@@ -4,6 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../utiles/Asset_manger.dart';
 import 'Details.dart';
+import 'location/maps_Screen.dart';
+import 'location/nearby_places.dart';
+import 'location/polyline_screen.dart';
 
 class homeDesign extends StatefulWidget {
   const homeDesign({Key? key}) : super(key: key);
@@ -124,6 +127,31 @@ class _homeDesignState extends State<homeDesign> {
                       ),
                     ),
                   )),
+              Row(
+                children: [
+                  ElevatedButton(onPressed: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
+                      return const CurrentLocationScreen();
+                    }));
+                  }, child: const Text("User current location")),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  ElevatedButton(onPressed: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
+                      return const  NearByPlacesScreen();
+                    }));
+                  }, child: const Text("Nearby Places")),
+                  SizedBox(
+                   width: 10,
+                  ),
+                  ElevatedButton(onPressed: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
+                      return const  PolylineScreen();
+                    }));
+                  }, child: const Text("Polyline between two points")),
+                ],
+              )
             ],
           ),
         ),

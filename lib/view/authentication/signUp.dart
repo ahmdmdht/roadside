@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:roadside_assistance/configMaps.dart';
 import 'package:roadside_assistance/view/authentication/login.dart';
 
 import '../../main.dart';
+import '../location/configMaps.dart';
 import 'car_information.dart';
 
 
