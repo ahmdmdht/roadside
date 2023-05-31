@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
@@ -8,7 +7,6 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:roadside_assistance/cubit/maps_cubit.dart';
 import 'package:roadside_assistance/view/location/widgets/distance_and_time.dart';
 import 'package:roadside_assistance/view/location/widgets/place_item.dart';
-
 import 'package:uuid/uuid.dart';
 import '../../model/PlaceSuggestion.dart';
 import '../../model/place.dart';
@@ -109,68 +107,7 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
         .animateCamera(CameraUpdate.newCameraPosition(initialCameraPosition));
   }
 
-  // Widget buildFloatingSearchBar() {
-  //   final isPortrait =
-  //       MediaQuery.of(context).orientation == Orientation.portrait;
-  //
-  //   return FloatingSearchBar(
-  //     key: key,
-  //     controller: controller,
-  //     elevation: 6,
-  //     hintStyle: TextStyle(fontSize: 18),
-  //     queryStyle: TextStyle(fontSize: 18),
-  //     hint: 'Find a place..',
-  //     border: BorderSide(style: BorderStyle.none),
-  //     margins: EdgeInsets.fromLTRB(20, 70, 20, 0),
-  //     padding: EdgeInsets.fromLTRB(2, 0, 2, 0),
-  //     height: 52,
-  //     iconColor: Colors.blue,
-  //     scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
-  //     transitionDuration: const Duration(milliseconds: 600),
-  //     transitionCurve: Curves.easeInOut,
-  //     physics: const BouncingScrollPhysics(),
-  //     axisAlignment: isPortrait ? 0.0 : -1.0,
-  //     openAxisAlignment: 0.0,
-  //     width: isPortrait ? 600 : 500,
-  //     debounceDelay: const Duration(milliseconds: 500),
-  //     // onQueryChanged: (query) {
-  //     //   getPlacesSuggestions(query);
-  //     // },
-  //     // onFocusChanged: (_) {
-  //     //   // hide distance and time row
-  //     //   setState(() {
-  //     //     isTimeAndDistanceVisible = false;
-  //     //   });
-  //     // },
-  //     transition: CircularFloatingSearchBarTransition(),
-  //     actions: [
-  //       FloatingSearchBarAction(
-  //         showIfOpened: false,
-  //         child: CircularButton(
-  //           icon: Icon(
-  //             Icons.place,
-  //             color: Colors.black.withOpacity(0.6),
-  //           ),
-  //           onPressed: () {},
-  //         ),
-  //       )
-  //     ],
-  //     builder: (context, transition) {
-  //       return ClipRRect(
-  //         borderRadius: BorderRadius.circular(8),
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.start,
-  //           mainAxisSize: MainAxisSize.min,
-  //           children: [
-  //             buildSuggestionsBloc(),
-  //             buildSelectedPlaceLocationBloc(),
-  //             buildDiretionsBloc(),
-  //           ],
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
+
 
   Widget buildDiretionsBloc() {
     return BlocListener<MapsCubit, MapsState>(
@@ -285,7 +222,9 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
         itemBuilder: (ctx, index) {
           return InkWell(
             onTap: () async {
-              print(places[index].description);
+              placeSuggestion = places[index];
+              controller.close();
+              getSelectedPlaceLocation();
             },
             child: PlaceItem(
               suggestion: places[index],
