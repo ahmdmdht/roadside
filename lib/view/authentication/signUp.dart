@@ -6,7 +6,7 @@ import 'package:roadside_assistance/view/authentication/login.dart';
 
 import '../../main.dart';
 import '../location/configMaps.dart';
-import 'car_information.dart';
+
 
 
 
@@ -44,7 +44,7 @@ class signUp extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 40,
+                height: 60,
               ),
               Container(
                 padding: EdgeInsets.only(right: 72,left: 21),
@@ -66,9 +66,9 @@ class signUp extends StatelessWidget {
                     print(value);
                   },
                 ),
-              ),//email
+              ),//firstName
               SizedBox(
-                height: 60,
+                height: 40,
               ),
               Container(
                 padding: EdgeInsets.only(right: 72,left: 21),
@@ -89,9 +89,9 @@ class signUp extends StatelessWidget {
                     print(value);
                   },
                 ),
-              ),//email
+              ),//lastName
               SizedBox(
-                height: 60,
+                height: 40,
               ),
               Container(
                 padding: EdgeInsets.only(right: 72,left: 21),
@@ -114,9 +114,9 @@ class signUp extends StatelessWidget {
                     print(data);
                   },
                 ),
-              ),//email
+              ),//emailAddress
               SizedBox(
-                height: 60,
+                height: 40,
               ),
               Container(
                 padding: EdgeInsets.only(right: 72, left: 21),
@@ -133,9 +133,9 @@ class signUp extends StatelessWidget {
                     print(value);
                   },
                 ),
-              ), //email
+              ), //vehicleMake
               SizedBox(
-                height: 60,
+                height: 40,
               ),
               Container(
                 padding: EdgeInsets.only(right: 72, left: 21),
@@ -152,9 +152,9 @@ class signUp extends StatelessWidget {
                     print(value);
                   },
                 ),
-              ), //email
+              ), //vehicleModel
               SizedBox(
-                height: 60,
+                height: 40,
               ),
               Container(
                 padding: EdgeInsets.only(right: 72, left: 21),
@@ -171,9 +171,9 @@ class signUp extends StatelessWidget {
                     print(value);
                   },
                 ),
-              ), //email
+              ), //carColor
               SizedBox(
-                height: 60,
+                height: 40,
               ),
               Container(
                 padding: EdgeInsets.only(right: 72, left: 21),
@@ -195,6 +195,9 @@ class signUp extends StatelessWidget {
                   },
                 ),
               ),
+              SizedBox(
+                height: 40,
+              ),//licensePlate
               Container(
                 padding: EdgeInsets.only(right: 72,left: 21),
                 child: TextFormField(
@@ -221,25 +224,21 @@ class signUp extends StatelessWidget {
                 ),
               ),//password
               SizedBox(
-                height: 15,
+                height: 25,
               ),
 
-              SizedBox(
-                height: 15,
-              ),
+
               Divider(
                 indent: 50,
                 endIndent: 50,
                 color: Colors.grey,
               ),
               SizedBox(
-                height: 15,
+                height: 35,
               ),
 
 
-              SizedBox(
-                height: 25,
-              ),
+
               Container(
 
                 width: 200,
@@ -262,7 +261,7 @@ class signUp extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
+              ),//continueButton
 
             ],
           ),

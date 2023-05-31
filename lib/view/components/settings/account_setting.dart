@@ -45,7 +45,7 @@ class _account_settingState extends State<account_setting> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.cyanAccent,
+        backgroundColor: Colors.blue.shade900,
         actions: [
           IconButton(
               onPressed: () async {
@@ -98,6 +98,7 @@ class _account_settingState extends State<account_setting> {
                     height: 15,
                   ),
                   TextFormField(
+                    textDirection: TextDirection.ltr,
                     controller: firstName,
                     //ده اللي بيتحكملي ف textformfieled
                     keyboardType: TextInputType.text,
@@ -115,12 +116,13 @@ class _account_settingState extends State<account_setting> {
                       // بيخزن كل حرف حرفيا او كل تغير عندي فالكونسول
                       print(value);
                     },
-                  ),
+                  ),//firstName
                   SizedBox(
                     height: 15,
                   ),
                   TextFormField(
                     controller: lastName,
+                    textDirection: TextDirection.ltr,
                     //ده اللي بيتحكملي ف textformfieled
                     keyboardType: TextInputType.text,
                     //يخفي اللي بكتبه ولا لا
@@ -137,12 +139,13 @@ class _account_settingState extends State<account_setting> {
                       // بيخزن كل حرف حرفيا او كل تغير عندي فالكونسول
                       print(value);
                     },
-                  ),
+                  ),//LastName
                   SizedBox(
                     height: 15,
                   ),
                   TextFormField(
                     controller: phoneNumber,
+                    textDirection: TextDirection.ltr,
                     //ده اللي بيتحكملي ف textformfieled
                     keyboardType: TextInputType.phone,
                     //يخفي اللي بكتبه ولا لا
@@ -160,12 +163,13 @@ class _account_settingState extends State<account_setting> {
                       // بيخزن كل حرف حرفيا او كل تغير عندي فالكونسول
                       print(value);
                     },
-                  ),
+                  ),//phoneNumber
                   SizedBox(
                     height: 15,
                   ),
                   TextFormField(
                     controller: email,
+                    textDirection: TextDirection.ltr,
                     //ده اللي بيتحكملي ف textformfieled
                     keyboardType: TextInputType.emailAddress,
                     //يخفي اللي بكتبه ولا لا
@@ -183,12 +187,13 @@ class _account_settingState extends State<account_setting> {
                       // بيخزن كل حرف حرفيا او كل تغير عندي فالكونسول
                       print(value);
                     },
-                  ),
+                  ),//emailAddress
                   SizedBox(
                     height: 15,
                   ),
                   TextFormField(
                     controller: bio,
+                    textDirection: TextDirection.ltr,
                     //ده اللي بيتحكملي ف textformfieled
                     keyboardType: TextInputType.text,
                     //يخفي اللي بكتبه ولا لا
@@ -203,7 +208,7 @@ class _account_settingState extends State<account_setting> {
                       bio.text = value;
                       print(value);
                     },
-                  ),
+                  ),//bio
                   SizedBox(
                     height: 15,
                   ),
@@ -225,7 +230,7 @@ class _account_settingState extends State<account_setting> {
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.red),
+                          color: Colors.blue.shade900),
                     ),
                   ),
                 ],

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:roadside_assistance/view/authentication/signUp.dart';
+import 'package:roadside_assistance/view/authentication/verification.dart';
 import 'package:roadside_assistance/view/components/components.dart';
 
 import '../../main.dart';
@@ -40,7 +41,7 @@ class logIn extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 40,
+            height: 50,
           ),
           Container(
             padding: EdgeInsets.only(right: 72, left: 50),
@@ -59,9 +60,9 @@ class logIn extends StatelessWidget {
                 print(value);
               },
             ),
-          ),
+          ),//emailAddress
           SizedBox(
-            height: 60,
+            height: 40,
           ),
           Container(
             padding: EdgeInsets.only(right: 72, left: 50),
@@ -85,15 +86,18 @@ class logIn extends StatelessWidget {
                 print(value);
               },
             ),
-          ),
+          ),//password
           SizedBox(
-            height: 15,
+            height: 20,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => MyVerify()));
+                  },
                   child: Text(
                     "Forget your password?",
                   )),
@@ -108,7 +112,7 @@ class logIn extends StatelessWidget {
             color: Colors.grey,
           ),
           SizedBox(
-            height: 15,
+            height: 20,
           ),
           TextButton(
               onPressed: () {
@@ -131,8 +135,8 @@ class logIn extends StatelessWidget {
               onPressed: () {
                  loginWithFirebase(context);
 
-                // Navigator.pushReplacement(context,
-                //     MaterialPageRoute(builder: (context) => HomeLayout()));
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => HomeLayout()));
               },
               child: Text(
                 "Log in",
@@ -142,59 +146,10 @@ class logIn extends StatelessWidget {
                     color: Colors.white),
               ),
             ),
-          ),
+          ),//logButton
         ],
       ),
     )
-        // SingleChildScrollView(
-        //   scrollDirection: Axis.horizontal,
-        //   child: Row(
-        //     children: [
-        //       Container(
-        //         color: Colors.blue,
-        //         child: Text(
-        //           "second page",style: TextStyle(
-        //           color: Colors.white60,
-        //           fontSize: 30.0,
-        //
-        //         ),
-        //         ),
-        //       ),
-        //       Container(
-        //
-        //         child: Text(
-        //           "second page",style: TextStyle(
-        //           color: Colors.white60,
-        //           fontSize: 30.0,
-        //           backgroundColor: Colors.blue,
-        //         ),
-        //         ),
-        //       ),
-        //       Container(
-        //
-        //         child: Text(
-        //           "second page",style: TextStyle(
-        //           color: Colors.white60,
-        //           fontSize: 30.0,
-        //           backgroundColor: Colors.blue,
-        //         ),
-        //         ),
-        //       ),
-        //       Container(
-        //
-        //         child: Text(
-        //           "second page",style: TextStyle(
-        //           color: Colors.white60,
-        //           fontSize: 30.0,
-        //           backgroundColor: Colors.blue,
-        //         ),
-        //         ),
-        //       ),
-        //
-        //     ],
-        //   ),
-        // ),
-
         );
   }
 
@@ -223,10 +178,6 @@ class logIn extends StatelessWidget {
 
       }
     }
-    // if (user != null) {
-    //   userRef.child(user.user!.uid).once().then((value){
-    //     print("1232123");
-    //   });
-    // } else {}
+    
   }
 }

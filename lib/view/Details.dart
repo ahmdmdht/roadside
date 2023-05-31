@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'authentication/car_information.dart';
 import 'location/maps_Screen.dart';
 
 class VehicleIssue  extends StatefulWidget {

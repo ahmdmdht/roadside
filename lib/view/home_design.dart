@@ -5,8 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../utiles/Asset_manger.dart';
 import 'Details.dart';
 import 'location/maps_Screen.dart';
-import 'location/nearby_places.dart';
-import 'location/polyline_screen.dart';
+
 
 class homeDesign extends StatefulWidget {
   const homeDesign({Key? key}) : super(key: key);
@@ -41,118 +40,101 @@ class _homeDesignState extends State<homeDesign> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 92,
-              ),
-              Center(
-                child: Text(
-                  'what is the problem?',
-                  style: GoogleFonts.pacifico(
-                      textStyle: Theme.of(context).textTheme.displayMedium,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w500,
-                      fontStyle: FontStyle.italic,
-                      color: Color.fromRGBO(167, 233, 47, 1)),
+          child: Expanded(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 92,
                 ),
-              ), // text
-              SizedBox(
-                height: 70,
-              ),
-              SizedBox(
-                height: 300,
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 30,
-                      mainAxisSpacing: 30),
-                  itemBuilder: (context, index) => buildItem(index, context),
-                  itemCount: 6,
-                  primary: false,
-                ),
-              ),
-              MaterialButton(
-                onPressed: (){},
-                child: Container(
-                  height: 60,
-                  width: 220,
-                  decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(6),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.shade200.withOpacity(0.5),
-                          blurRadius: 40,
-                          offset: Offset(-3, -3),
-                        ),
-                      ]),
-                  child: Center(
-                    child: Text(
-                      'Something else',
-                      style: GoogleFonts.akshar(
+                Center(
+                  child: Text(
+                    'what is the problem?',
+                    style: GoogleFonts.pacifico(
                         textStyle: Theme.of(context).textTheme.displayMedium,
-                        fontSize: 17,
-                        color: Colors.black,
+                        fontSize: 24,
                         fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                        fontStyle: FontStyle.italic,
+                        color: Color.fromRGBO(167, 233, 47, 1)),
+                  ),
+                ), // text
+                const SizedBox(
+                  height: 70,
+                ),
+                SizedBox(
+                  height: 300,
+                  child: GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 30,
+                        mainAxisSpacing: 30),
+                    itemBuilder: (context, index) => buildItem(index, context),
+                    itemCount: 6,
+                    primary: false,
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              MaterialButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                        context, MaterialPageRoute(builder: (context) => VehicleIssue()));
-                  },
+                MaterialButton(
+                  onPressed: (){},
                   child: Container(
                     height: 60,
-                    width: 350,
+                    width: 220,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      color: Color.fromRGBO(167, 233, 47, 1),
-                    ),
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(6),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.shade200.withOpacity(0.5),
+                            blurRadius: 40,
+                            offset: Offset(-3, -3),
+                          ),
+                        ]),
                     child: Center(
                       child: Text(
-                        'Continue',
+                        'Something else',
                         style: GoogleFonts.akshar(
                           textStyle: Theme.of(context).textTheme.displayMedium,
-                          fontSize: 30,
+                          fontSize: 17,
                           color: Colors.black,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
-                  )),
-              Row(
-                children: [
-                  ElevatedButton(onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
-                      return const CurrentLocationScreen();
-                    }));
-                  }, child: const Text("User current location")),
-                  SizedBox(
-                    width: 10,
                   ),
-                  ElevatedButton(onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
-                      return const  NearByPlacesScreen();
-                    }));
-                  }, child: const Text("Nearby Places")),
-                  SizedBox(
-                   width: 10,
-                  ),
-                  ElevatedButton(onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
-                      return const  PolylineScreen();
-                    }));
-                  }, child: const Text("Polyline between two points")),
-                ],
-              )
-            ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                MaterialButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                          context, MaterialPageRoute(builder: (context) => VehicleIssue()));
+                    },
+                    child: Container(
+                      height: 60,
+                      width: 350,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: Color.fromRGBO(167, 233, 47, 1),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Continue',
+                          style: GoogleFonts.akshar(
+                            textStyle: Theme.of(context).textTheme.displayMedium,
+                            fontSize: 30,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    )),
+                // ElevatedButton(onPressed: (){
+                //   Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
+                //     return const CurrentLocationScreen();
+                //   }));
+                // }, child: const Text("User current location")),
+
+              ],
+            ),
           ),
         ),
       ),

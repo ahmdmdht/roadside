@@ -11,7 +11,9 @@ class _notificationState extends State<notification> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      backgroundColor:Colors.lightGreenAccent ,
+      body:  Center(child: Text("aaaaa33333333333333333333333")),
     );
+
   }
 }
