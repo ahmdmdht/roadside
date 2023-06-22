@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -66,7 +67,8 @@ class on_boarding extends StatelessWidget {
                   onPageChanged: (int index){
                     if(index == boarding.length -1){
                        Navigator.pushReplacement(context,
-                           MaterialPageRoute(builder: (context) => logIn()));
+                           MaterialPageRoute(builder: (context) => logIn()
+                           ));
 
                     }
                   },

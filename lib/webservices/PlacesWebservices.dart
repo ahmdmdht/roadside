@@ -68,7 +68,7 @@ class PlacesWebservices {
           'key': mapKey2,
         },
       );
-      print("Omar I'm testing directions");
+      print(" I'm testing directions");
       print(response.data);
       return response.data;
     } catch (error) {

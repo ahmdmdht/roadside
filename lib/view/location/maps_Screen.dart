@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:roadside_assistance/cubit/maps_cubit.dart';
+import 'package:roadside_assistance/main.dart';
+import 'package:roadside_assistance/view/location/configMaps.dart';
 import 'package:roadside_assistance/view/location/widgets/distance_and_time.dart';
 import 'package:roadside_assistance/view/location/widgets/place_item.dart';
 import 'package:uuid/uuid.dart';
@@ -19,6 +23,59 @@ class CurrentLocationScreen extends StatefulWidget {
 }
 
 class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
+
+
+  late StreamController<List<LatLng>> _onlineUsersController;
+  late DatabaseReference userRef;
+
+
+  @override
+  void initState() {
+    super.initState();
+    getMyCurrentLocation();
+    //ده الجزء الخاص ب انه ينشئ اوبجكت فالفاير بيز للاونلاين يوزرس المتاحين
+    // _onlineUsersController = StreamController<List<LatLng>>(
+    //   onListen: () {
+    //     // Get the online users' locations from the Firebase Realtime Database.
+    //     userRef = FirebaseDatabase.instance.ref('users');
+    //     userRef.onValue.listen((event) {
+    //       List<LatLng> locations = [];
+    //       for (var user in event.snapshot.children) {
+    //         LatLng location = LatLng(
+    //             user.child('latitude').value as double,
+    //             user.child('longitude').value as double);
+    //         locations.add(location);
+    //       }
+    //       _onlineUsersController.add(locations);
+    //     });
+    //   },
+    // );
+    }
+  // DatabaseReference userRef = FirebaseDatabase.instance.ref().child('users/online_statues');
+  // void initState() {
+  //   super.initState();
+  //   userRef.onValue.listen((event) {
+  //     // Get the list of users who are online.
+  //     final List<String> onlineUsers = event.snapshot.value as List<String>;
+  //
+  //     // Update the map screen to show the users who are online.
+  //     setState(() {
+  //       onlineUsers.forEach((user) {
+  //         // Get the user's location from the database.
+  //         final LatLng userLocation = userRef.child(user).child('location').value;
+  //
+  //         // Add a marker to the map for the user's location.
+  //         Marker marker = Marker(
+  //           position: userLocation,
+  //           icon: BitmapDescriptor.defaultMarker,
+  //         );
+  //
+  //         googleController.addMarker(marker);
+  //       });
+  //     });
+  //   });
+  // }
+
   GlobalKey key = GlobalKey();
   List<PlaceSuggestion> places = [];
   static Position? position;
@@ -57,11 +114,11 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
   late String time;
   late String distance;
 
-  @override
-  initState() {
-    super.initState();
-    getMyCurrentLocation();
-  }
+  // @override
+  // initState() {
+  //   super.initState();
+  //   getMyCurrentLocation();
+  // }
 
 //بي check لو فاتخ اللوكيشن gps بيجبلي اللوكيشن اللايف
   Future<void> getMyCurrentLocation() async {
@@ -73,6 +130,18 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
 
   Widget buildMap() {
     return GoogleMap(
+    //   markers: _onlineUsersController.stream
+    //       .map((locations) => locations
+    //       .map((location) => Marker(position: location))
+    //       .toList())
+    //       .listen(
+    //         (markers) => {
+    //       setState(() {
+    //         // Update the markers on the GoogleMap.
+    //       })
+    //     },
+    //   ),
+    // ),
       initialCameraPosition: initialCameraPosition,
       //اول مالخريطه تفتح يجبلي اللايف لوكيشن بتاعي
       myLocationButtonEnabled: true,
@@ -106,8 +175,6 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
     controller
         .animateCamera(CameraUpdate.newCameraPosition(initialCameraPosition));
   }
-
-
 
   Widget buildDiretionsBloc() {
     return BlocListener<MapsCubit, MapsState>(
@@ -262,6 +329,7 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
       openAxisAlignment: 0.0,
       width: isPortrait ? 600 : 500,
       debounceDelay: const Duration(milliseconds: 500),
+      progress: progressIndicator,
       onQueryChanged: (query) {
         // Call your model, bloc, controller here.
         getPlacesSuggestions(query);
@@ -337,6 +405,17 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
                   placeDirections: placeDirections,
                 )
               : Container(),
+          // Positioned(
+          //     top: 570,
+          //     bottom: 0,
+          //     left: 0,
+          //     right: 0,
+          //     child: MaterialButton(onPressed: () {
+          //       makeUserOnlineNow();
+          //       getLocationLiveUpdates();
+          //     },
+          //       child: Icon(Icons.verified_user),
+          //     ))
         ],
       ),
       floatingActionButton: Container(
@@ -349,5 +428,25 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
       ),
     );
   }
-//
+//دول تو فانكشنز عشان واحد ينشئ الاونلاين يوزر فالفاير بيز وفانكشن بتعمل ابديت باللوكيشن
+  // void makeUserOnlineNow() async {
+  //
+  //
+  //
+  //   Geofire.initialize("availableUsers");
+  //   Geofire.setLocation(
+  //       currentfirebaseUser!.uid, position!.latitude, position!.longitude);
+  //   rideRequestRef.onValue.listen((event) {});
+  // }
+  //
+  // void getLocationLiveUpdates() {
+  //   StreamSubscription<Position> streamSubscription;
+  //   streamSubscription =
+  //       Geolocator.getPositionStream().listen((Position position) {
+  //     position = position;
+  //     Geofire.setLocation(
+  //         currentfirebaseUser!.uid, position.latitude, position.longitude);
+  //     LatLng latLng = LatLng(position.latitude, position.longitude);
+  //   });
+  // }
 }

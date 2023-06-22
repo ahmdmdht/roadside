@@ -2,6 +2,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PlaceDirections {
+  //الحدود بتاعه الخط اللي هرسمه بين نقتطين
   late LatLngBounds bounds;
   late List<PointLatLng> polylinePoints;
   late String totalDistance;
@@ -15,10 +16,12 @@ class PlaceDirections {
   });
 
   factory PlaceDirections.fromJson(Map<String, dynamic> json) {
+    // الراوتس عبارة عن ليستة او ارراي ف انا باخد اول اندكس واعمله مابينج
     final data = Map<String, dynamic>.from(json['routes'][0]);
 
     final northeast = data['bounds']['northeast'];
     final southwest = data['bounds']['southwest'];
+    //ده كلاس تبع المكتبة فلاتر مابس بياخد اتنين كونستراكتور
     final bounds = LatLngBounds(
       northeast: LatLng(northeast['lat'], northeast['lng']),
       southwest: LatLng(southwest['lat'], southwest['lng']),
