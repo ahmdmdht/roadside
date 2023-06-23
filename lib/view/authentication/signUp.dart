@@ -85,15 +85,15 @@ class signUp extends StatelessWidget {
                         BoxDecoration(borderRadius: BorderRadius.circular(15)),
                     child: TextFormField(
                       controller: lastNamecontroller,
-                      validator: (value){
-                        if(value==null || value.isEmpty){
-                          return'please enter last name ';
-                        }else if(value.length<6){
-                          return 'Enter valid last name ';
-                        }
-                        return null;
-
-                      },
+                      // validator: (value){
+                      //   if(value==null || value.isEmpty){
+                      //     return'please enter last name ';
+                      //   }else if(value.length<6){
+                      //     return 'Enter valid last name ';
+                      //   }
+                      //   return null;
+                      //
+                      // },
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                           labelText: 'Last Name', border: OutlineInputBorder()),
@@ -244,17 +244,17 @@ class signUp extends StatelessWidget {
                     child: TextFormField(
                       controller: passwordcontroller,
                       validator: (value) {
-                        RegExp regex = RegExp(
-                            r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#\$&*~]).{8,}$');
-                        if (value!.isEmpty) {
-                          return 'Please enter password';
-                        } else {
-                          if (!regex.hasMatch(value!)) {
-                            return 'Enter valid password';
-                          } else {
-                            return null;
-                          }
-                        }
+                        // RegExp regex = RegExp(
+                        //     r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#\$&*~]).{8,}$');
+                        // if (value!.isEmpty) {
+                        //   return 'Please enter password';
+                        // } else {
+                        //   if (!regex.hasMatch(value!)) {
+                        //     return 'Enter valid password';
+                        //   } else {
+                        //     return null;
+                        //   }
+                        // }
                       },
                       //ده اللي بيتحكملي ف textformfieled
                       keyboardType: TextInputType.visiblePassword,
@@ -330,6 +330,7 @@ class signUp extends StatelessWidget {
         'last name': lastNamecontroller.text,
         'email': emailcontroller.text,
         'phone': '',
+        'status': '',
         'bio': '',
         'Cars': {
           'vehicle make': vehicleMakecontroller.text,

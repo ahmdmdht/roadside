@@ -23,6 +23,8 @@ class CurrentLocationScreen extends StatefulWidget {
 }
 
 class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
+  final databaseReference = FirebaseDatabase.instance.reference();
+  List<Map<String, dynamic>> availableUsers = [];
 
 
   late StreamController<List<LatLng>> _onlineUsersController;
@@ -33,23 +35,24 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
   void initState() {
     super.initState();
     getMyCurrentLocation();
+    retrieveUserLocations();
     //ده الجزء الخاص ب انه ينشئ اوبجكت فالفاير بيز للاونلاين يوزرس المتاحين
-    // _onlineUsersController = StreamController<List<LatLng>>(
-    //   onListen: () {
-    //     // Get the online users' locations from the Firebase Realtime Database.
-    //     userRef = FirebaseDatabase.instance.ref('users');
-    //     userRef.onValue.listen((event) {
-    //       List<LatLng> locations = [];
-    //       for (var user in event.snapshot.children) {
-    //         LatLng location = LatLng(
-    //             user.child('latitude').value as double,
-    //             user.child('longitude').value as double);
-    //         locations.add(location);
-    //       }
-    //       _onlineUsersController.add(locations);
-    //     });
-    //   },
-    // );
+    _onlineUsersController = StreamController<List<LatLng>>(
+      onListen: () {
+        // Get the online users' locations from the Firebase Realtime Database.
+        userRef = FirebaseDatabase.instance.ref('users');
+        userRef.onValue.listen((event) {
+          List<LatLng> locations = [];
+          for (var user in event.snapshot.children) {
+            LatLng location = LatLng(
+                user.child('latitude').value as double,
+                user.child('longitude').value as double);
+            locations.add(location);
+          }
+          _onlineUsersController.add(locations);
+        });
+      },
+    );
     }
   // DatabaseReference userRef = FirebaseDatabase.instance.ref().child('users/online_statues');
   // void initState() {
@@ -146,7 +149,8 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
       //اول مالخريطه تفتح يجبلي اللايف لوكيشن بتاعي
       myLocationButtonEnabled: true,
       //الماركر بتاع اللوكيشن بتاعي
-      markers: markers,
+      ///markers: markers,
+      markers: getMarkers(),
       zoomControlsEnabled: false,
       //دول زرار مش محتاجه
       mapType: MapType.normal,
@@ -405,17 +409,17 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
                   placeDirections: placeDirections,
                 )
               : Container(),
-          // Positioned(
-          //     top: 570,
-          //     bottom: 0,
-          //     left: 0,
-          //     right: 0,
-          //     child: MaterialButton(onPressed: () {
-          //       makeUserOnlineNow();
-          //       getLocationLiveUpdates();
-          //     },
-          //       child: Icon(Icons.verified_user),
-          //     ))
+          Positioned(
+              top: 570,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: MaterialButton(onPressed: () {
+                makeUserOnlineNow();
+                getLocationLiveUpdates();
+              },
+                child: Icon(Icons.verified_user),
+              ))
         ],
       ),
       floatingActionButton: Container(
@@ -429,24 +433,51 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
     );
   }
 //دول تو فانكشنز عشان واحد ينشئ الاونلاين يوزر فالفاير بيز وفانكشن بتعمل ابديت باللوكيشن
-  // void makeUserOnlineNow() async {
-  //
-  //
-  //
-  //   Geofire.initialize("availableUsers");
-  //   Geofire.setLocation(
-  //       currentfirebaseUser!.uid, position!.latitude, position!.longitude);
-  //   rideRequestRef.onValue.listen((event) {});
-  // }
-  //
-  // void getLocationLiveUpdates() {
-  //   StreamSubscription<Position> streamSubscription;
-  //   streamSubscription =
-  //       Geolocator.getPositionStream().listen((Position position) {
-  //     position = position;
-  //     Geofire.setLocation(
-  //         currentfirebaseUser!.uid, position.latitude, position.longitude);
-  //     LatLng latLng = LatLng(position.latitude, position.longitude);
-  //   });
-  // }
+  void makeUserOnlineNow() async {
+
+    Geofire.initialize("availableUsers");
+    Geofire.setLocation(
+        currentfirebaseUser!.uid, position!.latitude, position!.longitude);
+    rideRequestRef.onValue.listen((event) {});
+  }
+
+  void getLocationLiveUpdates() {
+    StreamSubscription<Position> streamSubscription;
+    streamSubscription =
+        Geolocator.getPositionStream().listen((Position position) {
+      position = position;
+      Geofire.setLocation(
+          currentfirebaseUser!.uid, position.latitude, position.longitude);
+      LatLng latLng = LatLng(position.latitude, position.longitude);
+    });
+  }
+
+  Set<Marker> getMarkers() {
+    return availableUsers.map((user) {
+      LatLng userLocation = LatLng(user['latitude'], user['longitude']);
+      return Marker(
+        markerId: MarkerId(user['userId']),
+        position: userLocation,
+        // Add any other desired properties for the marker
+      );
+    }).toSet();
+  }
+
+  void retrieveUserLocations() {
+    databaseReference.child('availableUsers').onValue.listen((event) {
+      if (event.snapshot.value != null) {
+        Map<dynamic, dynamic> users = event.snapshot.value as Map;
+        users.forEach((key, value) {
+          Map<String, dynamic> userData = {
+            'userId': key,
+            'latitude': value['l'][0],
+            'longitude': value['l'][1],
+          };
+          setState(() {
+            availableUsers.add(userData);
+          });
+        });
+      }
+    });
+  }
 }
