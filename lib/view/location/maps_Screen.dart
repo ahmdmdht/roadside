@@ -149,7 +149,7 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
       //اول مالخريطه تفتح يجبلي اللايف لوكيشن بتاعي
       myLocationButtonEnabled: true,
       //الماركر بتاع اللوكيشن بتاعي
-      ///markers: markers,
+     //markers: markers,
       markers: getMarkers(),
       zoomControlsEnabled: false,
       //دول زرار مش محتاجه
@@ -453,7 +453,7 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
   }
 
   Set<Marker> getMarkers() {
-    Set<Marker> markers = {};
+
     for (var user in availableUsers) {
       LatLng userLocation = LatLng(user['latitude'], user['longitude']);
       Marker marker = Marker(
