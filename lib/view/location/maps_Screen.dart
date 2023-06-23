@@ -453,20 +453,26 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
   }
 
   Set<Marker> getMarkers() {
-    return availableUsers.map((user) {
+    Set<Marker> markers = {};
+    for (var user in availableUsers) {
       LatLng userLocation = LatLng(user['latitude'], user['longitude']);
-      return Marker(
+      Marker marker = Marker(
         markerId: MarkerId(user['userId']),
         position: userLocation,
         // Add any other desired properties for the marker
       );
-    }).toSet();
+      markers.add(marker);
+    }
+    return markers;
   }
+
 
   void retrieveUserLocations() {
     databaseReference.child('availableUsers').onValue.listen((event) {
       if (event.snapshot.value != null) {
         Map<dynamic, dynamic> users = event.snapshot.value as Map;
+        print('a777a');
+        print(users);
         users.forEach((key, value) {
           Map<String, dynamic> userData = {
             'userId': key,
@@ -476,6 +482,8 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
           setState(() {
             availableUsers.add(userData);
           });
+          print('a78488');
+          print(availableUsers);
         });
       }
     });
