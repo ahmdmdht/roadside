@@ -8,6 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:roadside_assistance/cubit/maps_cubit.dart';
 import 'package:roadside_assistance/main.dart';
+import 'package:roadside_assistance/view/home_design.dart';
 import 'package:roadside_assistance/view/location/configMaps.dart';
 import 'package:roadside_assistance/view/location/widgets/distance_and_time.dart';
 import 'package:roadside_assistance/view/location/widgets/place_item.dart';
@@ -17,6 +18,8 @@ import '../../model/PlaceSuggestion.dart';
 import '../../model/place.dart';
 import '../../model/place_direction.dart';
 import '../../remote/location_helper.dart';
+import '../components/components.dart';
+import '../home_layout.dart';
 import 'iot_model.dart';
 
 class CurrentLocationScreen extends StatefulWidget {
@@ -71,16 +74,31 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
     //     });
     //   }
     // });
-    dataRef.onValue.listen((event) {
-      DataSnapshot snapshot = event.snapshot;
-      if (snapshot.value != null) {
-        setState(() {
-          data = DataModel.fromSnapshot(snapshot);
-        });
-        _showUpdatedDataModelDialog(data);
-      }
-    });
+    /////////////////////////////////////////
+    // dataRef.onValue.listen((event) {
+    //   DataSnapshot snapshot = event.snapshot;
+    //   if (snapshot.value != null) {
+    //     setState(() {
+    //       data = DataModel.fromSnapshot(snapshot);
+    //     });
+    //     _showUpdatedDataModelDialog(data);
+    //   }
+    // });
+    /////////////////////////////////
+    // dataRef.onValue.listen((event) {
+    //   DataSnapshot snapshot = event.snapshot;
+    //   if (snapshot.value != null) {
+    //     DataModel newData = DataModel.fromSnapshot(snapshot);
+    //     if (newData.latitude != data.latitude || newData.longitude != data.longitude) {
+    //       setState(() {
+    //         data = newData;
+    //       });
+    //       _showUpdatedDataModelDialog(data);
+    //     }
+    //   }
+    // });
   }
+
 
   // DatabaseReference userRef = FirebaseDatabase.instance.ref().child('users/online_statues');
   // void initState() {
@@ -482,47 +500,47 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
           )
               : Container(),
 
-          Positioned(
-            bottom: 100,
-            top: 600,
-            right: 200,
-            left: 0,
-            child: GestureDetector(
-              onTap: () async {
-                final url =
-                    'https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
-              },
-              child: Text(
-                data.location!,
-                style: TextStyle(
-                  color: Colors.blue,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-            ),
-            // child: GestureDetector(
-            //
-            //   onTap: () async {
-            //     if (await canLaunch(data.location!)) {
-            //       await launch(data.location!);
-            //     } else {
-            //       throw 'Could not launch ${data.location}';
-            //     }
-            //   },
-            //   child: Text(
-            //     data.location!,
-            //     style: TextStyle(
-            //       color: Colors.blue,
-            //       decoration: TextDecoration.underline,
-            //     ),
-            //   ),
-            // ),
-          ),
+          // Positioned(
+          //   bottom: 100,
+          //   top: 600,
+          //   right: 200,
+          //   left: 0,
+          //   child: GestureDetector(
+          //     onTap: () async {
+          //       final url =
+          //           'https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}';
+          //       if (await canLaunch(url)) {
+          //         await launch(url);
+          //       } else {
+          //         throw 'Could not launch $url';
+          //       }
+          //     },
+          //     child: Text(
+          //       data.location!,
+          //       style: TextStyle(
+          //         color: Colors.blue,
+          //         decoration: TextDecoration.underline,
+          //       ),
+          //     ),
+          //   ),),
+          //   // child: GestureDetector(
+          //   //
+          //   //   onTap: () async {
+          //   //     if (await canLaunch(data.location!)) {
+          //   //       await launch(data.location!);
+          //   //     } else {
+          //   //       throw 'Could not launch ${data.location}';
+          //   //     }
+          //   //   },
+          //   //   child: Text(
+          //   //     data.location!,
+          //   //     style: TextStyle(
+          //   //       color: Colors.blue,
+          //   //       decoration: TextDecoration.underline,
+          //   //     ),
+          //   //   ),
+          //   // ),
+          // ),
           Positioned(
 
               top: 570,
@@ -530,8 +548,7 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
               left: 0,
               right: 0,
               child: Container(
-                height: 20,
-                width: 20,
+
                 margin: EdgeInsets.fromLTRB(0, 0, 8, 10),
                 child: IconButton(
 
@@ -543,6 +560,31 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
 
                 ),
               )),
+          ///////////////////////////
+    //       Positioned(
+    //         bottom: 10,
+    //         left: 0,
+    //         right: 0,
+    //
+    //         child: Container(
+    //           width: 70,
+    //           decoration: BoxDecoration(
+    //               borderRadius: BorderRadius.circular(8), color: Colors.transparent,
+    //           ),
+    //           child: MaterialButton(
+    //             onPressed:(){
+    //               Navigator.push(context, MaterialPageRoute(builder:(context) => homeDesign()));
+    // },
+    //             child: Text(
+    //               "Get Help!",
+    //               style: TextStyle(
+    //                   fontSize: 20,
+    //                   fontWeight: FontWeight.bold,
+    //                   color: Colors.blue),
+    //             ),
+    //           ),
+    //         ),
+    //       ),
         ],
       ),
       floatingActionButton: Container(
@@ -654,42 +696,42 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
 //     }
 //   }
 // }
-  void _showUpdatedDataModelDialog(DataModel data) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Updated Data Model'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('car accidient in this location '),
+/////////////////////////////////////////////////////////////
 
-                Text('Click here'),
-                TextButton(
-                    onPressed: ()async{
-                final url ='https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}';
-
-                if (await canLaunch(url)) {
-                await launch(url);
-                } else {
-                throw 'Could not launch $url';
-                }
-                } ,
-                    child: Text(data.location!)),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+  // void _showUpdatedDataModelDialog(DataModel data) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text('Updated Data Model'),
+  //         content: SingleChildScrollView(
+  //           child: ListBody(
+  //             children: <Widget>[
+  //               Text('car accidient in this location '),
+  //
+  //               Text('Click here'),
+  //               TextButton(
+  //                   onPressed: ()async{
+  //                     final Uri url = Uri.parse('https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}');
+  //
+  //               if (!await launchUrl(url)) {
+  //                 throw Exception('Could not launch $url');
+  //               }
+  //               } ,
+  //                   child: Text(data.location!)),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             child: Text('OK'),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 }

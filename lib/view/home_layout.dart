@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import '../utiles/Asset_manger.dart';
-import 'Details.dart';
 import 'components/settings/Notification.dart';
 import 'components/settings/account_setting.dart';
 import 'components/settings/setting1.dart';
@@ -19,9 +14,8 @@ class HomeLayout extends StatefulWidget {
 class _HomeLayoutState extends State<HomeLayout> {
   int currentIndex=2;
   List<Widget> screens=[
-
-    Setting1(),
     account_setting(),
+    Setting1(),
     homeDesign(),
     Setting1(),
     notification(),
@@ -72,10 +66,10 @@ class _HomeLayoutState extends State<HomeLayout> {
               label: 'Community'),
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.notification_important_outlined,
+                Icons.details,
                 color: Colors.grey,
               ),
-              label: 'Notification'),
+              label: 'About '),
         ],
       ),
     );

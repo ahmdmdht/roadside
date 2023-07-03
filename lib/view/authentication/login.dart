@@ -9,7 +9,9 @@ import 'package:roadside_assistance/view/components/components.dart';
 
 import '../../main.dart';
 import '../../remote/cashe_helper.dart';
+import '../home_design.dart';
 import '../home_layout.dart';
+import '../location/maps_Screen.dart';
 
 class logIn extends StatelessWidget {
   @override
@@ -200,7 +202,7 @@ class logIn extends StatelessWidget {
 
          CacheHelper.sharedPreferences.setString("userId", value.user!.uid);
         Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context) => HomeLayout()) ,(route) => false,);
+            MaterialPageRoute(builder: (context) => homeDesign()) ,(route) => false,);
 
 
       });
