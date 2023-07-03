@@ -85,18 +85,18 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
     //   }
     // });
     /////////////////////////////////
-    // dataRef.onValue.listen((event) {
-    //   DataSnapshot snapshot = event.snapshot;
-    //   if (snapshot.value != null) {
-    //     DataModel newData = DataModel.fromSnapshot(snapshot);
-    //     if (newData.latitude != data.latitude || newData.longitude != data.longitude) {
-    //       setState(() {
-    //         data = newData;
-    //       });
-    //       _showUpdatedDataModelDialog(data);
-    //     }
-    //   }
-    // });
+    dataRef.onValue.listen((event) {
+      DataSnapshot snapshot = event.snapshot;
+      if (snapshot.value != null) {
+        DataModel newData = DataModel.fromSnapshot(snapshot);
+        if (newData.latitude != data.latitude || newData.longitude != data.longitude) {
+          setState(() {
+            data = newData;
+          });
+          _showUpdatedDataModelDialog(data);
+        }
+      }
+    });
   }
 
 
@@ -500,29 +500,29 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
           )
               : Container(),
 
-          // Positioned(
-          //   bottom: 100,
-          //   top: 600,
-          //   right: 200,
-          //   left: 0,
-          //   child: GestureDetector(
-          //     onTap: () async {
-          //       final url =
-          //           'https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}';
-          //       if (await canLaunch(url)) {
-          //         await launch(url);
-          //       } else {
-          //         throw 'Could not launch $url';
-          //       }
-          //     },
-          //     child: Text(
-          //       data.location!,
-          //       style: TextStyle(
-          //         color: Colors.blue,
-          //         decoration: TextDecoration.underline,
-          //       ),
-          //     ),
-          //   ),),
+          Positioned(
+            bottom: 100,
+            top: 600,
+            right: 200,
+            left: 0,
+            child: GestureDetector(
+              onTap: () async {
+                final url =
+                    'https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}';
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              },
+              child: Text(
+                data.location!,
+                style: TextStyle(
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),),
           //   // child: GestureDetector(
           //   //
           //   //   onTap: () async {
@@ -698,40 +698,40 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
 // }
 /////////////////////////////////////////////////////////////
 
-  // void _showUpdatedDataModelDialog(DataModel data) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text('Updated Data Model'),
-  //         content: SingleChildScrollView(
-  //           child: ListBody(
-  //             children: <Widget>[
-  //               Text('car accidient in this location '),
-  //
-  //               Text('Click here'),
-  //               TextButton(
-  //                   onPressed: ()async{
-  //                     final Uri url = Uri.parse('https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}');
-  //
-  //               if (!await launchUrl(url)) {
-  //                 throw Exception('Could not launch $url');
-  //               }
-  //               } ,
-  //                   child: Text(data.location!)),
-  //             ],
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             child: Text('OK'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
+  void _showUpdatedDataModelDialog(DataModel data) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Updated Data Model'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('car accidient in this location '),
+
+                Text('Click here'),
+                TextButton(
+                    onPressed: ()async{
+                      final Uri url = Uri.parse('https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}');
+
+                if (!await launchUrl(url)) {
+                  throw Exception('Could not launch $url');
+                }
+                } ,
+                    child: Text(data.location!)),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
