@@ -11,11 +11,13 @@ import 'package:roadside_assistance/main.dart';
 import 'package:roadside_assistance/view/location/configMaps.dart';
 import 'package:roadside_assistance/view/location/widgets/distance_and_time.dart';
 import 'package:roadside_assistance/view/location/widgets/place_item.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 import '../../model/PlaceSuggestion.dart';
 import '../../model/place.dart';
 import '../../model/place_direction.dart';
 import '../../remote/location_helper.dart';
+import 'iot_model.dart';
 
 class CurrentLocationScreen extends StatefulWidget {
   @override
@@ -25,11 +27,14 @@ class CurrentLocationScreen extends StatefulWidget {
 class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
   final databaseReference = FirebaseDatabase.instance.reference();
   List<Map<String, dynamic>> availableUsers = [];
-
-
   late StreamController<List<LatLng>> _onlineUsersController;
+  DatabaseReference dataRef =
+  FirebaseDatabase.instance.reference().child('data');
+  DataModel data = DataModel();
   late DatabaseReference userRef;
 
+  //خاصة بقراءة داتا العربية الهاردوير
+  //List<Map<String, dynamic>> data = [];
 
   @override
   void initState() {
@@ -44,16 +49,39 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
         userRef.onValue.listen((event) {
           List<LatLng> locations = [];
           for (var user in event.snapshot.children) {
-            LatLng location = LatLng(
-                user.child('latitude').value as double,
-                user.child('longitude').value as double);
+            LatLng location = LatLng(user
+                .child('latitude')
+                .value as double,
+                user
+                    .child('longitude')
+                    .value as double);
             locations.add(location);
           }
           _onlineUsersController.add(locations);
         });
       },
     );
-    }
+
+    // dataRef.onValue.listen((event) {
+    //   DataSnapshot snapshot = event.snapshot;
+    //   if (snapshot.value != null) {
+    //     setState(() {
+    //       data = DataModel.fromSnapshot(snapshot);
+    //
+    //     });
+    //   }
+    // });
+    dataRef.onValue.listen((event) {
+      DataSnapshot snapshot = event.snapshot;
+      if (snapshot.value != null) {
+        setState(() {
+          data = DataModel.fromSnapshot(snapshot);
+        });
+        _showUpdatedDataModelDialog(data);
+      }
+    });
+  }
+
   // DatabaseReference userRef = FirebaseDatabase.instance.ref().child('users/online_statues');
   // void initState() {
   //   super.initState();
@@ -86,7 +114,7 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
   late GoogleMapController googleController;
   FloatingSearchBarController controller = FloatingSearchBarController();
   static final CameraPosition initialCameraPosition = CameraPosition(
-      // دول خطوط الطول وخطوط العرض بتوع اللوكيشن بتوعي
+    // دول خطوط الطول وخطوط العرض بتوع اللوكيشن بتوعي
       target: LatLng(position!.latitude, position!.longitude),
       zoom: 14);
   Set<Marker> markers = {};
@@ -133,23 +161,23 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
 
   Widget buildMap() {
     return GoogleMap(
-    //   markers: _onlineUsersController.stream
-    //       .map((locations) => locations
-    //       .map((location) => Marker(position: location))
-    //       .toList())
-    //       .listen(
-    //         (markers) => {
-    //       setState(() {
-    //         // Update the markers on the GoogleMap.
-    //       })
-    //     },
-    //   ),
-    // ),
+      //   markers: _onlineUsersController.stream
+      //       .map((locations) => locations
+      //       .map((location) => Marker(position: location))
+      //       .toList())
+      //       .listen(
+      //         (markers) => {
+      //       setState(() {
+      //         // Update the markers on the GoogleMap.
+      //       })
+      //     },
+      //   ),
+      // ),
       initialCameraPosition: initialCameraPosition,
       //اول مالخريطه تفتح يجبلي اللايف لوكيشن بتاعي
       myLocationButtonEnabled: true,
       //الماركر بتاع اللوكيشن بتاعي
-     //markers: markers,
+      //markers: markers,
       markers: getMarkers(),
       zoomControlsEnabled: false,
       //دول زرار مش محتاجه
@@ -161,13 +189,13 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
       },
       polylines: placeDirections != null
           ? {
-              Polyline(
-                polylineId: const PolylineId('my_polyline'),
-                color: Colors.black,
-                width: 2,
-                points: polylinePoints,
-              ),
-            }
+        Polyline(
+          polylineId: const PolylineId('my_polyline'),
+          color: Colors.black,
+          width: 2,
+          points: polylinePoints,
+        ),
+      }
           : {},
     );
   }
@@ -319,9 +347,53 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
         .emitPlaceLocation(placeSuggestion.placeId, sessionToken);
   }
 
+  //ده عشان اعمل dialog لما اضغط عاللوكيشين يجبلي المابة
+  void openLocationOnMap(String locationUrl) async {
+    if (await canLaunch(locationUrl)) {
+      await launch(locationUrl);
+    } else {
+      print('Could not launch $locationUrl');
+    }
+  }
+
+  void showLocationAlarm(String location) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: AlertDialog(
+            backgroundColor: Colors.transparent,
+            title: Text('Location Update'),
+            content: Text('The location has been updated to: $location'),
+            actions: [
+              MaterialButton(
+                color: Colors.transparent,
+                child: Text('Open in Maps'),
+                onPressed: () {
+                  openLocationOnMap(location);
+                  Navigator.of(context).pop();
+                },
+              ),
+              MaterialButton(
+                color: Colors.transparent,
+                child: Text('Close'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   Widget buildFloatingSearchBar() {
     final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
+        MediaQuery
+            .of(context)
+            .orientation == Orientation.portrait;
 
     return FloatingSearchBar(
       hint: 'Search...',
@@ -386,12 +458,12 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
           position != null
               ? buildMap()
               : Center(
-                  child: Container(
-                    child: CircularProgressIndicator(
-                      color: Colors.blue,
-                    ),
-                  ),
-                ),
+            child: Container(
+              child: CircularProgressIndicator(
+                color: Colors.blue,
+              ),
+            ),
+          ),
           buildFloatingSearchBar(),
           // Positioned(
           //   top: 3,
@@ -405,21 +477,72 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
 
           isSearchedPlaceMarkerClicked
               ? DistanceAndTime(
-                  isTimeAndDistanceVisible: isTimeAndDistanceVisible,
-                  placeDirections: placeDirections,
-                )
+            isTimeAndDistanceVisible: isTimeAndDistanceVisible,
+            placeDirections: placeDirections,
+          )
               : Container(),
+
           Positioned(
+            bottom: 100,
+            top: 600,
+            right: 200,
+            left: 0,
+            child: GestureDetector(
+              onTap: () async {
+                final url =
+                    'https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}';
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              },
+              child: Text(
+                data.location!,
+                style: TextStyle(
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+            // child: GestureDetector(
+            //
+            //   onTap: () async {
+            //     if (await canLaunch(data.location!)) {
+            //       await launch(data.location!);
+            //     } else {
+            //       throw 'Could not launch ${data.location}';
+            //     }
+            //   },
+            //   child: Text(
+            //     data.location!,
+            //     style: TextStyle(
+            //       color: Colors.blue,
+            //       decoration: TextDecoration.underline,
+            //     ),
+            //   ),
+            // ),
+          ),
+          Positioned(
+
               top: 570,
               bottom: 0,
               left: 0,
               right: 0,
-              child: MaterialButton(onPressed: () {
-                makeUserOnlineNow();
-                getLocationLiveUpdates();
-              },
-                child: Icon(Icons.verified_user),
-              ))
+              child: Container(
+                height: 20,
+                width: 20,
+                margin: EdgeInsets.fromLTRB(0, 0, 8, 10),
+                child: IconButton(
+
+                  onPressed: () {
+                    makeUserOnlineNow();
+                    getLocationLiveUpdates();
+                  },
+                  icon: Icon(Icons.verified_user, color: Colors.deepOrange),
+
+                ),
+              )),
         ],
       ),
       floatingActionButton: Container(
@@ -432,9 +555,9 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
       ),
     );
   }
+
 //دول تو فانكشنز عشان واحد ينشئ الاونلاين يوزر فالفاير بيز وفانكشن بتعمل ابديت باللوكيشن
   void makeUserOnlineNow() async {
-
     Geofire.initialize("availableUsers");
     Geofire.setLocation(
         currentfirebaseUser!.uid, position!.latitude, position!.longitude);
@@ -445,15 +568,14 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
     StreamSubscription<Position> streamSubscription;
     streamSubscription =
         Geolocator.getPositionStream().listen((Position position) {
-      position = position;
-      Geofire.setLocation(
-          currentfirebaseUser!.uid, position.latitude, position.longitude);
-      LatLng latLng = LatLng(position.latitude, position.longitude);
-    });
+          position = position;
+          Geofire.setLocation(
+              currentfirebaseUser!.uid, position.latitude, position.longitude);
+          LatLng latLng = LatLng(position.latitude, position.longitude);
+        });
   }
 
   Set<Marker> getMarkers() {
-
     for (var user in availableUsers) {
       LatLng userLocation = LatLng(user['latitude'], user['longitude']);
       Marker marker = Marker(
@@ -466,12 +588,14 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
     return markers;
   }
 
-
   void retrieveUserLocations() {
-    databaseReference.child('availableUsers').onValue.listen((event) {
+    databaseReference
+        .child('availableUsers')
+        .onValue
+        .listen((event) {
       if (event.snapshot.value != null) {
         Map<dynamic, dynamic> users = event.snapshot.value as Map;
-        print('a777a');
+        print('allloooo');
         print(users);
         users.forEach((key, value) {
           Map<String, dynamic> userData = {
@@ -482,10 +606,90 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
           setState(() {
             availableUsers.add(userData);
           });
-          print('a78488');
+          print('1238488');
           print(availableUsers);
         });
       }
     });
+  }
+
+  // void retrieveLocations() {
+  //   databaseReference.child('data').onValue.listen((event) {
+  //     if (event.snapshot.value != null) {
+  //       Map<dynamic, dynamic> locations = event.snapshot.value as Map;
+  //       //List<DataModel> newDataList = [];
+  //       locations.forEach((key, value) {
+  //         //newDataList.add(DataModel.fromSnapshot(value));
+  //         Map<String, dynamic> dataList = {
+  //           'Impact Message': key,
+  //           'Latitude':value,
+  //           'Location': value,
+  //           'Longitude': value,
+  //
+  //         };
+  //       });
+  //       setState(() {
+  //         dataList;
+  //       });
+  //     }
+  //   });
+  // }
+  void retrieveLocationIot() {
+    DatabaseReference dataRef =
+    FirebaseDatabase.instance.reference().child('data');
+
+    dataRef.onValue.listen((event) {
+      DataSnapshot snapshot = event.snapshot;
+      if (snapshot.value != null) {
+        data = DataModel.fromSnapshot(snapshot);
+      }
+    });
+  }
+//   void _launchWebUrl(String url) async {
+//     if (await canLaunch(url)) {
+//       // ignore: deprecated_member_use
+//       await launch(url);
+//     } else {
+//       throw 'Could not launch $url';
+//     }
+//   }
+// }
+  void _showUpdatedDataModelDialog(DataModel data) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Updated Data Model'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('car accidient in this location '),
+
+                Text('Click here'),
+                TextButton(
+                    onPressed: ()async{
+                final url ='https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}';
+
+                if (await canLaunch(url)) {
+                await launch(url);
+                } else {
+                throw 'Could not launch $url';
+                }
+                } ,
+                    child: Text(data.location!)),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

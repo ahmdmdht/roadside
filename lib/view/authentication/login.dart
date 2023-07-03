@@ -86,19 +86,19 @@ class logIn extends StatelessWidget {
                 padding: EdgeInsets.only(right: 72, left: 50),
                 child: TextFormField(
                   controller: passwordcontroller,
-                  validator: (value){
-                    RegExp regex =
-                    RegExp(r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#\$&*~]).{8,}$');
-                    if (value!.isEmpty) {
-                      return 'Please enter password';
-                    } else {
-                      if (!regex.hasMatch(value!)) {
-                        return 'Enter valid password';
-                      } else {
-                        return null;
-                      }
-                    }
-                  },
+                  // validator: (value){
+                  //   RegExp regex =
+                  //   RegExp(r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#\$&*~]).{8,}$');
+                  //   if (value!.isEmpty) {
+                  //     return 'Please enter password';
+                  //   } else {
+                  //     if (!regex.hasMatch(value!)) {
+                  //       return 'Enter valid password';
+                  //     } else {
+                  //       return null;
+                  //     }
+                  //   }
+                  // },
                   //ده اللي بيتحكملي ف textformfieled
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,

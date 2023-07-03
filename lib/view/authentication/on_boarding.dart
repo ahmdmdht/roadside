@@ -95,8 +95,9 @@ class on_boarding extends StatelessWidget {
                   Spacer(),
                   TextButton(onPressed: (){
                     boardController.nextPage(
+
                       duration: Duration(milliseconds: 750,),
-                      curve: Curves.fastLinearToSlowEaseIn,
+                      curve: Curves.bounceIn,
                     );
                   }, child: Text('NEXT'))
                 ],

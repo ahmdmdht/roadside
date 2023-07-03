@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'location/maps_Screen.dart';
 
-class VehicleIssue  extends StatefulWidget {
-  const VehicleIssue({Key? key}) : super(key: key);
+class vehicleIssue  extends StatefulWidget {
+  TextEditingController details =TextEditingController();
+
 
   @override
-  State<VehicleIssue> createState() => _VehState();
+  State<vehicleIssue> createState() => _VehState();
 }
 
-class _VehState extends State<VehicleIssue> {
+class _VehState extends State<vehicleIssue> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

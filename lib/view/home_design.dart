@@ -40,101 +40,99 @@ class _homeDesignState extends State<homeDesign> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Expanded(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 92,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 92,
+              ),
+              Center(
+                child: Text(
+                  'what is the problem?',
+                  style: GoogleFonts.pacifico(
+                      textStyle: Theme.of(context).textTheme.displayMedium,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                      fontStyle: FontStyle.italic,
+                      color: Color.fromRGBO(167, 233, 47, 1)),
                 ),
-                Center(
-                  child: Text(
-                    'what is the problem?',
-                    style: GoogleFonts.pacifico(
+              ), // text
+              const SizedBox(
+                height: 70,
+              ),
+              SizedBox(
+                height: 300,
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 30,
+                      mainAxisSpacing: 30),
+                  itemBuilder: (context, index) => buildItem(index, context),
+                  itemCount: 6,
+                  primary: false,
+                ),
+              ),
+              MaterialButton(
+                onPressed: (){},
+                child: Container(
+                  height: 60,
+                  width: 220,
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(6),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.shade200.withOpacity(0.5),
+                          blurRadius: 40,
+                          offset: Offset(-3, -3),
+                        ),
+                      ]),
+                  child: Center(
+                    child: Text(
+                      'Something else',
+                      style: GoogleFonts.akshar(
                         textStyle: Theme.of(context).textTheme.displayMedium,
-                        fontSize: 24,
+                        fontSize: 17,
+                        color: Colors.black,
                         fontWeight: FontWeight.w500,
-                        fontStyle: FontStyle.italic,
-                        color: Color.fromRGBO(167, 233, 47, 1)),
-                  ),
-                ), // text
-                const SizedBox(
-                  height: 70,
-                ),
-                SizedBox(
-                  height: 300,
-                  child: GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 30,
-                        mainAxisSpacing: 30),
-                    itemBuilder: (context, index) => buildItem(index, context),
-                    itemCount: 6,
-                    primary: false,
+                      ),
+                    ),
                   ),
                 ),
-                MaterialButton(
-                  onPressed: (){},
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              MaterialButton(
+                  onPressed: () {
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>vehicleIssue()));
+                  },
                   child: Container(
                     height: 60,
-                    width: 220,
+                    width: 350,
                     decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(6),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade200.withOpacity(0.5),
-                            blurRadius: 40,
-                            offset: Offset(-3, -3),
-                          ),
-                        ]),
+                      borderRadius: BorderRadius.circular(6),
+                      color: Color.fromRGBO(167, 233, 47, 1),
+                    ),
                     child: Center(
                       child: Text(
-                        'Something else',
+                        'Continue',
                         style: GoogleFonts.akshar(
                           textStyle: Theme.of(context).textTheme.displayMedium,
-                          fontSize: 17,
+                          fontSize: 30,
                           color: Colors.black,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                MaterialButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context, MaterialPageRoute(builder: (context) => VehicleIssue()));
-                    },
-                    child: Container(
-                      height: 60,
-                      width: 350,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: Color.fromRGBO(167, 233, 47, 1),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Continue',
-                          style: GoogleFonts.akshar(
-                            textStyle: Theme.of(context).textTheme.displayMedium,
-                            fontSize: 30,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    )),
-                // ElevatedButton(onPressed: (){
-                //   Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
-                //     return const CurrentLocationScreen();
-                //   }));
-                // }, child: const Text("User current location")),
+                  )),
+              // ElevatedButton(onPressed: (){
+              //   Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
+              //     return const CurrentLocationScreen();
+              //   }));
+              // }, child: const Text("User current location")),
 
-              ],
-            ),
+            ],
           ),
         ),
       ),

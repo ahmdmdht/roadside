@@ -17,7 +17,7 @@ class HomeLayout extends StatefulWidget {
 }
 
 class _HomeLayoutState extends State<HomeLayout> {
-  int currentIndex=0;
+  int currentIndex=2;
   List<Widget> screens=[
 
     Setting1(),
@@ -47,10 +47,10 @@ class _HomeLayoutState extends State<HomeLayout> {
         items: const [
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.home,
+                Icons.account_circle_outlined,
                 color: Colors.grey,
               ),
-              label: 'Home'),
+              label: 'Profile'),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.settings_applications_outlined,
@@ -59,10 +59,10 @@ class _HomeLayoutState extends State<HomeLayout> {
               label: 'Settings'),
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.account_circle_outlined,
+                Icons.home,
                 color: Colors.grey,
               ),
-              label: 'Profile'),
+              label: 'Home'),
 
           BottomNavigationBarItem(
               icon: Icon(
