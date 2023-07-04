@@ -516,7 +516,7 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
                 }
               },
               child: Text(
-                data.location!,
+                "${data.location}",
                 style: TextStyle(
                   color: Colors.blue,
                   decoration: TextDecoration.underline,
@@ -699,6 +699,9 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
 /////////////////////////////////////////////////////////////
 
   void _showUpdatedDataModelDialog(DataModel data) {
+    if(data.location==null){
+      return;
+    }
     showDialog(
       context: context,
       builder: (BuildContext context) {
