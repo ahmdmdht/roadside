@@ -75,28 +75,28 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
     //   }
     // });
     /////////////////////////////////////////
-    // dataRef.onValue.listen((event) {
-    //   DataSnapshot snapshot = event.snapshot;
-    //   if (snapshot.value != null) {
-    //     setState(() {
-    //       data = DataModel.fromSnapshot(snapshot);
-    //     });
-    //     _showUpdatedDataModelDialog(data);
-    //   }
-    // });
-    /////////////////////////////////
     dataRef.onValue.listen((event) {
       DataSnapshot snapshot = event.snapshot;
       if (snapshot.value != null) {
-        DataModel newData = DataModel.fromSnapshot(snapshot);
-        if (newData.latitude != data.latitude || newData.longitude != data.longitude) {
-          setState(() {
-            data = newData;
-          });
-          _showUpdatedDataModelDialog(data);
-        }
+        setState(() {
+          data = DataModel.fromSnapshot(snapshot);
+        });
+        _showUpdatedDataModelDialog(data);
       }
     });
+    /////////////////////////////////
+    // dataRef.onValue.listen((event) {
+    //   DataSnapshot snapshot = event.snapshot;
+    //   if (snapshot.value != null) {
+    //     DataModel newData = DataModel.fromSnapshot(snapshot);
+    //     if (newData.latitude != data.latitude || newData.longitude != data.longitude) {
+    //       setState(() {
+    //         data = newData;
+    //       });
+    //       _showUpdatedDataModelDialog(data);
+    //     }
+    //   }
+    // });
   }
 
 
