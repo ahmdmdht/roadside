@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:roadside_assistance/view/authentication/login.dart';
 
 import '../home_layout.dart';
+import 'forget_password.dart';
 
 class MyVerify extends StatefulWidget {
   const MyVerify({Key? key}) : super(key: key);
@@ -105,7 +107,8 @@ class _MyVerifyState extends State<MyVerify> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
                     onPressed: () {
-                      Navigator.pushReplacement(context, HomeLayout() as Route<Object?>);
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => logIn()));
                     },
                     child: Text("Verify Phone Number")),
               ),
@@ -113,14 +116,13 @@ class _MyVerifyState extends State<MyVerify> {
                 children: [
                   TextButton(
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          'phone',
-                              (route) => false,
-                        );
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) => forget_password()));
+
+
                       },
                       child: Text(
-                        "Edit Phone Number ?",
+                        "Edit Email Address ?",
                         style: TextStyle(color: Colors.black),
                       ))
                 ],

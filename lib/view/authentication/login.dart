@@ -12,6 +12,7 @@ import '../../remote/cashe_helper.dart';
 import '../home_design.dart';
 import '../home_layout.dart';
 import '../location/maps_Screen.dart';
+import 'forget_password.dart';
 
 class logIn extends StatelessWidget {
   @override
@@ -129,7 +130,7 @@ class logIn extends StatelessWidget {
                   TextButton(
                       onPressed: () {
                         Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) => MyVerify()));
+                            MaterialPageRoute(builder: (context) => forget_password()));
                       },
                       child: Text(
                         "Forget your password?",

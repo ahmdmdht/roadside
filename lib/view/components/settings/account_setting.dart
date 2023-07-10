@@ -1,17 +1,12 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-
 import '../../../main.dart';
 import '../../../remote/cashe_helper.dart';
-
-
 class account_setting extends StatefulWidget {
   @override
   State<account_setting> createState() => _account_settingState();
 }
-
 class _account_settingState extends State<account_setting> {
   var firstName = TextEditingController();
   var lastName = TextEditingController();
@@ -19,9 +14,7 @@ class _account_settingState extends State<account_setting> {
   var email = TextEditingController();
   var phoneNumber = TextEditingController();
   var bio = TextEditingController();
-
   Map<String, dynamic>? map;
-
   @override
   void initState() {
     super.initState();

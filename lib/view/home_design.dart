@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../utiles/Asset_manger.dart';
 import 'Details.dart';
-
-
-
 class homeDesign extends StatefulWidget {
   const homeDesign({Key? key}) : super(key: key);
-
   @override
   State<homeDesign> createState() => _homeDesignState();
 }
-
 class _homeDesignState extends State<homeDesign> {
   int selectedIndex=0;
   List listOfImages = [

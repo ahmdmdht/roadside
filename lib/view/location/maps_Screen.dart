@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,7 @@ import 'package:roadside_assistance/view/home_design.dart';
 import 'package:roadside_assistance/view/location/configMaps.dart';
 import 'package:roadside_assistance/view/location/widgets/distance_and_time.dart';
 import 'package:roadside_assistance/view/location/widgets/place_item.dart';
+import 'package:roadside_assistance/view/rating.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 import '../../model/PlaceSuggestion.dart';
@@ -439,6 +441,7 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
       // animating between opened and closed stated.
       transition: CircularFloatingSearchBarTransition(),
       actions: [
+
         FloatingSearchBarAction(
           showIfOpened: false,
           child: CircularButton(
@@ -471,96 +474,122 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        fit: StackFit.expand,
-        children: [
+          fit: StackFit.expand,
+          children: [
           position != null
-              ? buildMap()
-              : Center(
-            child: Container(
-              child: CircularProgressIndicator(
-                color: Colors.blue,
-              ),
-            ),
-          ),
-          buildFloatingSearchBar(),
-          // Positioned(
-          //   top: 3,
-          //   left: 5,
-          //   right: 5,
-          //   child: SearchLocationWidget(
-          //       mapController: googleController,
-          //       pickedAddress: locationController.pickAddress,
-          //       isEnabled: null),
-          // ),
+          ? buildMap()
+          : Center(
+    child: Container(
+    child: CircularProgressIndicator(
+      color: Colors.blue,
+    ),
+    ),
+    ),
+    buildFloatingSearchBar(),
+    // Positioned(
+    //   top: 3,
+    //   left: 5,
+    //   right: 5,
+    //   child: SearchLocationWidget(
+    //       mapController: googleController,
+    //       pickedAddress: locationController.pickAddress,
+    //       isEnabled: null),
+    // ),
 
-          isSearchedPlaceMarkerClicked
-              ? DistanceAndTime(
-            isTimeAndDistanceVisible: isTimeAndDistanceVisible,
-            placeDirections: placeDirections,
-          )
-              : Container(),
+    isSearchedPlaceMarkerClicked
+    ? DistanceAndTime(
+    isTimeAndDistanceVisible: isTimeAndDistanceVisible,
+    placeDirections: placeDirections,
+    )
+        : Container(),
 
-          Positioned(
-            bottom: 100,
-            top: 600,
-            right: 200,
-            left: 0,
-            child: GestureDetector(
-              onTap: () async {
-                final url =
-                    'https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
-              },
-              child: Text(
-                "${data.location}",
-                style: TextStyle(
-                  color: Colors.blue,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-            ),),
-          //   // child: GestureDetector(
-          //   //
-          //   //   onTap: () async {
-          //   //     if (await canLaunch(data.location!)) {
-          //   //       await launch(data.location!);
-          //   //     } else {
-          //   //       throw 'Could not launch ${data.location}';
-          //   //     }
-          //   //   },
-          //   //   child: Text(
-          //   //     data.location!,
-          //   //     style: TextStyle(
-          //   //       color: Colors.blue,
-          //   //       decoration: TextDecoration.underline,
-          //   //     ),
-          //   //   ),
-          //   // ),
-          // ),
-          Positioned(
+    Positioned(
+    bottom: 100,
+    top: 600,
+    right: 200,
+    left: 0,
+    child: AnimatedButton(
+    text: 'Problem Solved',
+    color: Colors.black,
+    pressEvent: () {
+    AwesomeDialog(
+    context: context,
+    animType: AnimType.leftSlide,
+    headerAnimationLoop: false,
+    dialogType: DialogType.success,
+    showCloseIcon: true,
+    title: 'Succes',
+    desc: 'go..............',
+    btnOkOnPress: () {
+    debugPrint('End Session');
+    },
+    btnOkIcon: Icons.check_circle,
+    onDismissCallback: (type) {
+      // Navigator.push(context, MaterialPageRoute(builder: (context) => rating()));
+    debugPrint('Dialog Dissmiss from callback $type');
+    },
+    ).show();
+    },
 
-              top: 570,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
+    ),
+    ),
+    // child: GestureDetector(
+    //   onTap: () async {
+    //     final url =
+    //         'https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}';
+    //     if (await canLaunch(url)) {
+    //       await launch(url);
+    //     } else {
+    //       throw 'Could not launch $url';
+    //     }
+    //   },
+    //   child: Text(
+    //     "${data.location}",
+    //     style: TextStyle(
+    //       color: Colors.blue,
+    //       decoration: TextDecoration.underline,
+    //     ),
+    //   ),
+    // ),),
+    //////////////////
+    // child: GestureDetector(
+    //
+    //   onTap: () async {
+    //     if (await canLaunch(data.location!)) {
+    //       await launch(data.location!);
+    //     } else {
+    //       throw 'Could not launch ${data.location}';
+    //     }
+    //   },
+    //   child: Text(
+    //     data.location!,
+    //     style: TextStyle(
+    //       color: Colors.blue,
+    //       decoration: TextDecoration.underline,
+    //     ),
+    //   ),
+    // ),
 
-                margin: EdgeInsets.fromLTRB(0, 0, 8, 10),
-                child: IconButton(
+    Positioned(
 
-                  onPressed: () {
-                    makeUserOnlineNow();
-                    getLocationLiveUpdates();
-                  },
-                  icon: Icon(Icons.verified_user, color: Colors.deepOrange),
+    top: 570,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    child: Container(
 
-                ),
-              )),
-          ///////////////////////////
+    margin: EdgeInsets.fromLTRB(0, 0, 8, 10),
+    child: IconButton(
+
+    onPressed: () {
+    makeUserOnlineNow();
+    getLocationLiveUpdates();
+    },
+    icon: Icon(Icons.verified_user, color: Colors.deepOrange),
+
+    ),
+    )),
+    ///////////////////////////
     //       Positioned(
     //         bottom: 10,
     //         left: 0,
@@ -585,18 +614,18 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
     //           ),
     //         ),
     //       ),
-        ],
-      ),
-      floatingActionButton: Container(
-        margin: EdgeInsets.fromLTRB(0, 0, 8, 30),
-        child: FloatingActionButton(
-          backgroundColor: Colors.blue,
-          onPressed: _goToMyCurrentLocation,
-          child: Icon(Icons.place, color: Colors.white),
-        ),
-      ),
+    ],
+    ),
+    floatingActionButton: Container(
+    margin: EdgeInsets.fromLTRB(0, 0, 8, 30),
+    child: FloatingActionButton(
+    backgroundColor: Colors.blue,
+    onPressed: _goToMyCurrentLocation,
+    child: Icon(Icons.place, color: Colors.white),
+    ),
+    ),
     );
-  }
+    }
 
 //دول تو فانكشنز عشان واحد ينشئ الاونلاين يوزر فالفاير بيز وفانكشن بتعمل ابديت باللوكيشن
   void makeUserOnlineNow() async {
@@ -687,6 +716,7 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
       }
     });
   }
+
 //   void _launchWebUrl(String url) async {
 //     if (await canLaunch(url)) {
 //       // ignore: deprecated_member_use
@@ -699,7 +729,7 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
 /////////////////////////////////////////////////////////////
 
   void _showUpdatedDataModelDialog(DataModel data) {
-    if(data.location==null){
+    if (data.location == null) {
       return;
     }
     showDialog(
@@ -714,13 +744,15 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
 
                 Text('Click here'),
                 TextButton(
-                    onPressed: ()async{
-                      final Uri url = Uri.parse('https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}');
+                    onPressed: () async {
+                      final Uri url = Uri.parse(
+                          'https://www.google.com/maps/search/?api=1&query=${data
+                              .latitude},${data.longitude}');
 
-                if (!await launchUrl(url)) {
-                  throw Exception('Could not launch $url');
-                }
-                } ,
+                      if (!await launchUrl(url)) {
+                        throw Exception('Could not launch $url');
+                      }
+                    },
                     child: Text(data.location!)),
               ],
             ),
